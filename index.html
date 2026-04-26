@@ -34,6 +34,9 @@
   --shadow-card: 0 1px 4px rgba(0,0,0,0.07);
   --shadow-modal: 0 -4px 24px rgba(0,0,0,0.10);
   --transition: 0.18s ease;
+  --duration-fast: 0.18s;
+  --duration-normal: 0.25s;
+  --duration-slow: 0.3s;
   --z-header: 100;
   --z-fab: 90;
   --z-nav: 100;
@@ -237,7 +240,7 @@ a { color: inherit; text-decoration: none; }
   z-index: var(--z-menu);
   min-width: 160px;
   overflow: hidden;
-  animation: fadeIn 0.15s ease;
+  animation: fadeIn var(--duration-fast) ease;
 }
 .menu-item {
   display: flex; align-items: center; gap: 10px;
@@ -342,7 +345,7 @@ a { color: inherit; text-decoration: none; }
 <!-- ===== 追加/編集モーダル ===== -->
 <div id="modal" style="display:none;position:fixed;inset:0;z-index:var(--z-modal);align-items:flex-end;justify-content:center;">
   <div onclick="closeModal()" style="position:absolute;inset:0;background:rgba(0,0,0,0.45);animation:fadeIn 0.2s ease;"></div>
-  <div style="position:relative;width:100%;max-width:430px;background:var(--c-bg);border-radius:var(--radius-l) var(--radius-l) 0 0;padding:24px 16px calc(24px + env(safe-area-inset-bottom));max-height:88dvh;overflow-y:auto;box-shadow:var(--shadow-modal);animation:slideUp 0.25s ease;">
+  <div style="position:relative;width:100%;max-width:430px;background:var(--c-bg);border-radius:var(--radius-l) var(--radius-l) 0 0;padding:24px 16px calc(24px + env(safe-area-inset-bottom));max-height:88dvh;overflow-y:auto;box-shadow:var(--shadow-modal);animation:slideUp var(--duration-normal) ease;">
     <div style="width:36px;height:4px;background:#ddd;border-radius:2px;margin:0 auto 20px;"></div>
     <h2 id="modal-title" style="font-size:18px;font-weight:700;margin-bottom:20px;">アイテムを追加</h2>
 
@@ -398,44 +401,16 @@ a { color: inherit; text-decoration: none; }
       <input id="input-memo" class="form-input" type="text" placeholder="型番・購入場所など" maxlength="100">
     </div>
 
-    <!-- 使用ペース設定（消耗品向け） -->
-    <div id="pace-section" style="display:none;margin-bottom:16px;background:var(--c-surface);border-radius:var(--radius-m);padding:14px;">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
-        <p style="font-size:13px;font-weight:700;color:var(--c-text);">📊 使用ペースから計算</p>
-        <button type="button" class="tappable" id="btn-pace-analyze" style="height:28px;padding:0 10px;border:1.5px solid var(--c-primary);border-radius:14px;background:transparent;font-size:12px;font-weight:600;color:var(--c-primary);">AIで解析</button>
+    <!-- 通常量設定（消耗品向け） -->
+    <div id="qty-section" style="display:none;margin-bottom:16px;background:var(--c-surface);border-radius:var(--radius-m);padding:14px;">
+      <p style="font-size:13px;font-weight:700;color:var(--c-text);margin-bottom:4px;">📦 通常購入量（任意）</p>
+      <p style="font-size:12px;color:var(--c-sub);margin-bottom:10px;line-height:1.6;">設定しておくと「買った！」時にサイズが違っても自動で期間を調整できます。</p>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <input id="input-unit-qty" type="number" min="0.1" max="99999" step="1" class="form-input" style="flex:1;height:44px;padding:0 10px;text-align:center;" placeholder="例：1000" inputmode="decimal" aria-label="通常購入量">
+        <input id="input-unit-label" type="text" class="form-input" style="width:72px;height:44px;padding:0 10px;text-align:center;" placeholder="ml" maxlength="6" aria-label="単位">
+        <span style="font-size:13px;color:var(--c-sub);white-space:nowrap;">が通常</span>
       </div>
-      <div id="pace-fields" style="display:none;">
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap;">
-          <span style="font-size:14px;color:var(--c-text);">総量</span>
-          <input id="input-pace-total" type="number" min="1" max="9999" step="1" class="form-input" style="width:80px;height:36px;padding:0 8px;" placeholder="20" inputmode="decimal">
-          <select id="input-pace-unit" class="form-select" style="width:80px;height:36px;padding:0 8px;" onchange="document.getElementById('input-pace-unit2').value=this.value">
-            <option value="枚">枚</option>
-            <option value="ml">ml</option>
-            <option value="g">g</option>
-            <option value="個">個</option>
-            <option value="回">回</option>
-          </select>
-          <span style="font-size:14px;color:var(--c-text);">を</span>
-        </div>
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap;">
-          <span style="font-size:14px;color:var(--c-text);">1日に</span>
-          <input id="input-pace-per-day" type="number" min="0.1" max="99" step="0.5" class="form-input" style="width:70px;height:36px;padding:0 8px;" placeholder="1" inputmode="decimal">
-          <select id="input-pace-unit2" class="form-select" style="width:80px;height:36px;padding:0 8px;">
-            <option value="枚">枚</option>
-            <option value="ml">ml</option>
-            <option value="g">g</option>
-            <option value="個">個</option>
-            <option value="回">回</option>
-          </select>
-          <span style="font-size:14px;color:var(--c-text);">使用</span>
-        </div>
-        <div style="background:var(--c-primary-light);border-radius:var(--radius-s);padding:10px;display:flex;align-items:center;justify-content:space-between;">
-          <span style="font-size:13px;color:var(--c-primary);">計算結果</span>
-          <span id="pace-result" style="font-size:15px;font-weight:700;color:var(--c-primary);">—</span>
-        </div>
-        <button type="button" class="tappable" id="btn-pace-apply" style="width:100%;height:38px;background:var(--c-primary);color:#fff;border:none;border-radius:var(--radius-s);font-size:14px;font-weight:600;margin-top:8px;">この値を反映する</button>
-      </div>
-      <p id="pace-ai-hint" style="font-size:12px;color:var(--c-sub);margin-top:4px;">「AIで解析」をタップすると商品名から自動入力します</p>
+      <p id="qty-hint" style="font-size:12px;color:var(--c-primary);margin-top:6px;"></p>
     </div>
 
     <button id="modal-save-btn" class="tappable" onclick="saveItem()" style="width:100%;height:52px;background:var(--c-primary);color:#fff;border:none;border-radius:var(--radius-s);font-size:16px;font-weight:700;margin-top:8px;">保存する</button>
@@ -443,14 +418,42 @@ a { color: inherit; text-decoration: none; }
 </div>
 
 <!-- ===== 確認ダイアログ ===== -->
-<div id="confirm-dialog" style="display:none;position:fixed;inset:0;z-index:var(--z-confirm);align-items:center;justify-content:center;padding:16px;">
+<div id="confirm-dialog" role="dialog" aria-modal="true" aria-labelledby="confirm-msg" style="display:none;position:fixed;inset:0;z-index:var(--z-confirm);align-items:center;justify-content:center;padding:16px;">
   <div onclick="closeConfirm(false)" style="position:absolute;inset:0;background:rgba(0,0,0,0.45);"></div>
-  <div style="position:relative;width:100%;max-width:320px;background:var(--c-bg);border-radius:var(--radius-m);padding:24px;box-shadow:0 8px 32px rgba(0,0,0,0.15);animation:fadeIn 0.18s ease;">
+  <div style="position:relative;width:100%;max-width:320px;background:var(--c-bg);border-radius:var(--radius-m);padding:24px;box-shadow:0 8px 32px rgba(0,0,0,0.15);animation:fadeIn var(--duration-fast) ease;">
     <p id="confirm-msg" style="font-size:16px;font-weight:600;margin-bottom:8px;"></p>
     <p id="confirm-sub" style="font-size:14px;color:var(--c-sub);margin-bottom:20px;"></p>
     <div style="display:flex;gap:8px;">
       <button class="tappable" onclick="closeConfirm(false)" style="flex:1;height:44px;border:1.5px solid var(--c-border);border-radius:var(--radius-s);background:transparent;font-size:15px;font-weight:600;color:var(--c-sub);">キャンセル</button>
       <button class="tappable" id="confirm-ok-btn" onclick="closeConfirm(true)" style="flex:1;height:44px;border:none;border-radius:var(--radius-s);background:var(--c-danger);color:#fff;font-size:15px;font-weight:700;">実行する</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 買った！サイズ入力ダイアログ ===== -->
+<div id="bought-dialog" role="dialog" aria-modal="true" aria-labelledby="bought-dialog-title" style="display:none;position:fixed;inset:0;z-index:var(--z-confirm);align-items:center;justify-content:center;padding:16px;">
+  <div onclick="closeBoughtDialog(false)" style="position:absolute;inset:0;background:rgba(0,0,0,0.45);"></div>
+  <div style="position:relative;width:100%;max-width:340px;background:var(--c-bg);border-radius:var(--radius-m);padding:24px;box-shadow:0 8px 32px rgba(0,0,0,0.15);animation:fadeIn var(--duration-fast) ease;">
+    <p id="bought-dialog-title" style="font-size:16px;font-weight:700;margin-bottom:6px;">✅ 購入サイズを入力</p>
+    <p id="bought-dialog-sub" style="font-size:13px;color:var(--c-sub);margin-bottom:16px;line-height:1.6;"></p>
+
+    <label for="bought-qty-input" class="form-label" style="margin-bottom:6px;">今回の購入量</label>
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+      <input id="bought-qty-input" type="number" min="0.1" step="1" class="form-input" style="flex:1;height:48px;text-align:center;font-size:18px;font-weight:700;" inputmode="decimal" aria-label="今回購入した量">
+      <span id="bought-qty-unit" style="font-size:15px;font-weight:600;color:var(--c-sub);white-space:nowrap;min-width:32px;"></span>
+    </div>
+
+    <div id="bought-calc-result" style="background:var(--c-primary-light);border-radius:var(--radius-s);padding:10px 12px;margin-bottom:16px;display:none;">
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <span style="font-size:12px;color:var(--c-primary);">次回買い替えまで</span>
+        <span id="bought-calc-label" style="font-size:15px;font-weight:700;color:var(--c-primary);"></span>
+      </div>
+      <div id="bought-learn-badge" style="display:none;margin-top:4px;font-size:11px;color:var(--c-success);">🎓 使用ペースを実績から更新しました</div>
+    </div>
+
+    <div style="display:flex;gap:8px;">
+      <button class="tappable" onclick="closeBoughtDialog('skip')" style="flex:1;height:44px;border:1.5px solid var(--c-border);border-radius:var(--radius-s);background:transparent;font-size:14px;font-weight:600;color:var(--c-sub);">通常サイズ</button>
+      <button class="tappable" id="bought-ok-btn" onclick="closeBoughtDialog('ok')" style="flex:1;height:44px;border:none;border-radius:var(--radius-s);background:var(--c-primary);color:#fff;font-size:15px;font-weight:700;">確定</button>
     </div>
   </div>
 </div>
@@ -473,7 +476,7 @@ a { color: inherit; text-decoration: none; }
   box-shadow:0 4px 20px rgba(0,0,0,0.25);
   z-index:var(--z-toast);
   cursor:pointer;
-  animation:slideDown 0.3s ease;
+  animation:slideDown var(--duration-slow) ease;
 ">
   <div style="display:flex;align-items:center;gap:10px;">
     <span id="notify-icon" style="font-size:22px;flex-shrink:0;"></span>
@@ -518,10 +521,10 @@ function saveFbConfig(cfg) {
 
 /** 同期コードを保存・取得 */
 function getSyncCode() {
-  return localStorage.getItem(SYNC_CODE_KEY) || null;
+  try { return localStorage.getItem(SYNC_CODE_KEY) || null; } catch { return null; }
 }
 function saveSyncCode(code) {
-  localStorage.setItem(SYNC_CODE_KEY, code);
+  try { localStorage.setItem(SYNC_CODE_KEY, code); } catch {}
 }
 
 /** 同期ステータスUI更新 */
@@ -561,7 +564,7 @@ async function connectFirebase(config, syncCode) {
 
     // リアルタイムリスナー
     const unsub = onValue(dbRef, (snapshot) => {
-      if (fb.ignoreNext) { fb.ignoreNext = false; return; }
+      if (fb.ignoreNext > 0) { fb.ignoreNext--; return; }
       const data = snapshot.val();
       if (!data) return; // まだデータなし
       try {
@@ -619,11 +622,12 @@ function disconnectFirebase() {
 async function pushToFirebase() {
   if (fb.status !== 'online' || !fb._set) return;
   try {
-    fb.ignoreNext = true; // 自分の書き込みによる受信をスキップ
+    // ignoreNext をカウンター方式にして連続書き込み時も自己受信を確実にスキップ
+    fb.ignoreNext = (fb.ignoreNext || 0) + 1;
     const payload = JSON.stringify({ items: state.items, _syncTs: Date.now() });
     await fb._set(payload);
   } catch(err) {
-    fb.ignoreNext = false;
+    if (fb.ignoreNext > 0) fb.ignoreNext--;
     console.warn('Firebase書き込みエラー:', err);
   }
 }
@@ -633,8 +637,7 @@ async function pushToFirebase() {
 =========================== */
 const STORAGE_KEY = 'replace_timer_v1';
 const MAX_ITEMS = 200;
-const SOON_DAYS = 180;       // バッジ・フィルター用（6ヶ月以内）
-const NOTIFY_DAYS = 14;      // アプリ内通知の閾値（2週間以内）
+const SOON_DAYS = 14;        // まもなく・バッジ・通知の共通閾値（14日以内）
 const DATA_VERSION = 1;
 
 
@@ -783,12 +786,6 @@ const saveState = debounce(_saveStateNow, 300);
 
 let state = loadState();
 
-function setState(patch) {
-  Object.assign(state, patch);
-  saveState();
-  render();
-}
-
 /* ===========================
    ユーティリティ
 =========================== */
@@ -806,18 +803,20 @@ function escapeHtml(str) {
 let toastTimer = null;
 function showToast(msg, duration = 3200) {
   const el = document.getElementById('toast');
-  // 表示中のアニメーションをリセットしてから新しいメッセージを表示
-  el.style.animation = 'none';
-  el.style.opacity = '1';
-  el.style.transition = 'none';
-  // 強制リフロー（アニメーションリセットを確実に反映）
-  void el.offsetHeight;
-  el.textContent = msg;
+  // フェードアウト中のタイマーをすべてキャンセルしてからリセット
   clearTimeout(toastTimer);
+  el.style.transition = 'none';
+  el.style.opacity = '1';
+  void el.offsetHeight; // 強制リフロー
+  el.textContent = msg;
   toastTimer = setTimeout(() => {
-    el.style.transition = 'opacity 0.4s ease';
+    el.style.transition = 'opacity var(--duration-slow) ease';
     el.style.opacity = '0';
-    setTimeout(() => { el.style.transition = ''; el.style.animation = ''; }, 400);
+    // フェードアウト完了後にテキストをクリア（再表示時の残像を防ぐ）
+    setTimeout(() => {
+      el.style.transition = '';
+      el.textContent = '';
+    }, 350);
   }, duration);
 }
 
@@ -880,11 +879,6 @@ function getStatus(daysLeft) {
   return 'ok';
 }
 
-function formatDate(dateStr) {
-  const d = new Date(dateStr);
-  return `${d.getFullYear()}年${d.getMonth()+1}月${d.getDate()}日`;
-}
-
 /** 買い替え目安日を「M月D日」形式で返す */
 function formatReplaceDate(replaceDate) {
   const d = new Date(replaceDate);
@@ -905,14 +899,6 @@ function formatReplaceDateMonth(replaceDate) {
   const now = new Date();
   if (d.getFullYear() !== now.getFullYear()) return `${d.getFullYear()}`;
   return `${d.getMonth()+1}月`;
-}
-
-function formatDaysLeft(daysLeft) {
-  if (daysLeft < 0) return `${Math.abs(daysLeft)}日超過`;
-  if (daysLeft === 0) return '本日が目安日';
-  if (daysLeft < 30) return `あと${daysLeft}日`;
-  if (daysLeft < 365) return `あと約${Math.round(daysLeft/30)}ヶ月`;
-  return `あと約${(daysLeft/365).toFixed(1)}年`;
 }
 
 /* ===========================
@@ -1042,7 +1028,7 @@ function renderHome() {
   const alertEl = document.getElementById('home-alert-list');
   const alertItems = items
     .map(i => ({ item: i, info: getDaysInfo(i) }))
-    .filter(({ info }) => info.daysLeft <= NOTIFY_DAYS)
+    .filter(({ info }) => info.daysLeft <= SOON_DAYS)
     .sort((a, b) => a.info.daysLeft - b.info.daysLeft)
     .slice(0, 8);
 
@@ -1069,7 +1055,7 @@ function renderHome() {
         <p style="font-size:13px;font-weight:600;color:var(--c-sub);margin-bottom:10px;">直近の買い替え予定</p>
       </div>
       ${alertItems.map(({ item, info }) => renderItemCard(item, info)).join('')}
-      ${items.filter(i => getDaysInfo(i).daysLeft <= NOTIFY_DAYS).length > 8
+      ${items.filter(i => getDaysInfo(i).daysLeft <= SOON_DAYS).length > 8
         ? `<button class="tappable" onclick="showPage('list')" style="display:block;margin:4px 16px 8px;width:calc(100% - 32px);height:44px;background:var(--c-surface);border:1px solid var(--c-border);border-radius:var(--radius-m);font-size:14px;font-weight:600;color:var(--c-sub);">すべて見る →</button>`
         : ''}`;
   }
@@ -1118,11 +1104,17 @@ function renderItemCard(item, info) {
   const dayLabel   = status === 'over'
     ? `+${Math.abs(info.daysLeft)}`
     : formatReplaceDateDay(info.replaceDate);
-  const subLabel   = status === 'over'  ? '日超過'
-                   : status === 'soon'  ? '日以内'
-                   : '';
   const labelClass = status === 'over' ? 'label-over' : status === 'soon' ? 'label-soon' : 'label-ok';
   const labelText  = status === 'over' ? '要交換' : status === 'soon' ? 'まもなく' : '良好';
+
+  // 通常量バッジ（unitQtyがあれば表示）
+  const qtyBadge = item.unitQty
+    ? `<span style="font-size:10px;background:var(--c-surface);border:1px solid var(--c-border);border-radius:8px;padding:1px 6px;color:var(--c-sub);margin-left:4px;">${escapeHtml(String(item.unitQty))}${escapeHtml(item.unitLabel || '')}</span>`
+    : '';
+  // 学習済みバッジ（履歴2件以上）
+  const learnBadge = item.lastPurchase
+    ? `<span style="font-size:10px;color:var(--c-success);margin-left:4px;" title="使用ペースを学習済み">🎓</span>`
+    : '';
 
   return `
     <div class="item-card status-${status} tappable" data-id="${escapeHtml(item.id)}" data-action="edit"
@@ -1133,7 +1125,7 @@ function renderItemCard(item, info) {
         <div class="card-date-label ${labelClass}">${labelText}</div>
       </div>
       <div class="card-info">
-        <div class="card-name">${escapeHtml(item.name)}</div>
+        <div class="card-name">${escapeHtml(item.name)}${qtyBadge}${learnBadge}</div>
         <div class="card-meta">
           ${escapeHtml(item.categoryLabel || '')}${item.subcatLabel ? ' · ' + escapeHtml(item.subcatLabel) : ''}
           ${item.memo ? ' · ' + escapeHtml(item.memo.slice(0, 20)) : ''}
@@ -1170,7 +1162,7 @@ function renderBuyPage() {
     <div style="padding:0 16px 12px;">
       <div style="background:var(--c-primary-light);border:1px solid var(--c-primary);border-radius:var(--radius-m);padding:12px 14px;display:flex;align-items:center;gap:10px;opacity:0.85;">
         <span style="font-size:20px;">💡</span>
-        <p style="font-size:13px;color:var(--c-primary);line-height:1.6;">期限を超えたアイテムです。購入したら「買った！」をタップすると購入日がリセットされます。</p>
+        <p style="font-size:13px;color:var(--c-primary);line-height:1.6;">期限を超えたアイテムです。購入したら「買った！」をタップすると購入日がリセットされます。通常量を設定済みのアイテムは、今回買ったサイズを入力すると期間を自動調整します。</p>
       </div>
     </div>
     <div>
@@ -1183,12 +1175,16 @@ function renderBuyCard(item, info) {
   const catMaster = LIFESPAN_MASTER[item.category];
   const icon = catMaster?.icon ?? '📦';
   const overDays = Math.abs(info.daysLeft);
-  const overUnit = overDays < 30 ? '日' : overDays < 365 ? 'ヶ月' : '年';
-  const overNum  = overDays < 30
-    ? String(overDays)
-    : overDays < 365
-    ? `約${Math.round(overDays / 30)}`
-    : `約${(overDays / 365).toFixed(1)}`;
+  let overNum;
+  if (overDays < 100) {
+    overNum = `${overDays}日`;
+  } else if (overDays < 365) {
+    overNum = `${Math.floor(overDays / 30)}ヶ月`;
+  } else {
+    const y = Math.floor(overDays / 365);
+    const m = Math.floor((overDays % 365) / 30);
+    overNum = m > 0 ? `${y}年${m}ヶ月` : `${y}年`;
+  }
 
   return `
     <div class="item-card status-over" data-id="${escapeHtml(item.id)}"
@@ -1196,7 +1192,7 @@ function renderBuyCard(item, info) {
       <div class="card-date-block">
         <div class="card-date-month" style="color:var(--c-danger);">超過</div>
         <div class="card-date-day" style="color:var(--c-danger);font-size:22px;">${escapeHtml(overNum)}</div>
-        <div class="card-date-label label-over">${escapeHtml(overUnit)}超過</div>
+        <div class="card-date-label label-over">超過</div>
       </div>
       <div class="card-info">
         <div class="card-name">${escapeHtml(item.name)}</div>
@@ -1211,16 +1207,201 @@ function renderBuyCard(item, info) {
   `;
 }
 
-/** 「買った！」→ 購入日を今日にリセット */
+/** 「買った！」→ unitQty が設定済みならサイズ入力ダイアログを出す */
 function markAsBought(id) {
+  const item = state.items.find(i => i.id === id);
+  if (!item) return;
+
+  if (item.unitQty) {
+    openBoughtDialog(item);
+  } else {
+    _applyBought(id, null);
+  }
+}
+
+/* ===========================
+   買った！ダイアログ
+=========================== */
+let _boughtDialogId  = null;
+let _boughtDialogAC  = null; // AbortController for ESC + input listener
+
+function openBoughtDialog(item) {
+  // C-2: 二重オープンガード
+  if (document.getElementById('bought-dialog').style.display === 'flex') return;
+
+  _boughtDialogId = item.id;
+
+  const unit   = item.unitLabel || '';
+  const normal = item.unitQty;
+  const subEl  = document.getElementById('bought-dialog-sub');
+  subEl.textContent = `通常サイズ: ${normal}${unit}　今回は何${unit}購入しましたか？`;
+
+  document.getElementById('bought-qty-unit').textContent = unit;
+  document.getElementById('bought-qty-input').value = normal;
+  document.getElementById('bought-calc-result').style.display = 'none';
+  document.getElementById('bought-learn-badge').style.display = 'none';
+
+  const dialog = document.getElementById('bought-dialog');
+  dialog.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+
+  // C-3 + M-4: AbortController で ESC と input リスナーをまとめて管理
+  if (_boughtDialogAC) _boughtDialogAC.abort();
+  _boughtDialogAC = new AbortController();
+  const sig = _boughtDialogAC.signal;
+
+  const input = document.getElementById('bought-qty-input');
+  input.addEventListener('input', () => calcBoughtPreview(item), { signal: sig });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeBoughtDialog(false);
+  }, { signal: sig });
+
+  calcBoughtPreview(item);
+  setTimeout(() => input.select(), 80);
+  haptic();
+}
+
+/** 入力量から次回買い替えまでをプレビュー計算 */
+function calcBoughtPreview(item) {
+  const qty     = Number(document.getElementById('bought-qty-input').value);
+  const resultEl = document.getElementById('bought-calc-result');
+  const labelEl  = document.getElementById('bought-calc-label');
+  const learnEl  = document.getElementById('bought-learn-badge');
+
+  if (!qty || qty <= 0) {
+    resultEl.style.display = 'none';
+    return;
+  }
+
+  const { days, learned } = calcNextDays(item, qty);
+  labelEl.textContent = formatDaysFromDays(days);
+  learnEl.style.display = learned ? 'block' : 'none';
+  resultEl.style.display = 'block';
+}
+
+/**
+ * 今回の購入量から次回買い替えまでの日数を計算する。
+ *
+ * 実績あり（lastPurchase が記録済み）:
+ *   perDay = 前回購入量 ÷ 経過日数  ← 実績そのまま
+ *   days   = 今回購入量 ÷ perDay
+ *
+ * 実績なし・perDay あり:
+ *   days = 今回購入量 ÷ 設定perDay
+ *
+ * 実績なし・perDay なし（unitQty のみ）:
+ *   days = lifeYears × 365 × (今回量 ÷ 通常量)  ← 倍率
+ */
+function calcNextDays(item, qty) {
+  const last = item.lastPurchase; // { date, qty }
+
+  if (last && last.qty > 0) {
+    const elapsedDays = Math.max(1,
+      Math.ceil((new Date() - new Date(last.date)) / (1000 * 60 * 60 * 24))
+    );
+    const learnedPerDay = last.qty / elapsedDays;
+    return { days: qty / learnedPerDay, learned: true };
+  }
+
+  if (item.perDay && item.perDay > 0) {
+    return { days: qty / item.perDay, learned: false };
+  }
+
+  // perDay なし → 倍率で計算
+  const ratio = item.unitQty > 0 ? qty / item.unitQty : 1;
+  return { days: item.lifeYears * 365 * ratio, learned: false };
+}
+
+/** 日数を人間が読める文字列に */
+function formatDaysFromDays(days) {
+  const d = Math.round(days);
+  if (d < 100)  return `${d}日`;
+  if (d < 365) {
+    const m = Math.floor(d / 30);
+    return `${m}ヶ月`;
+  }
+  const y = Math.floor(d / 365);
+  const m = Math.floor((d % 365) / 30);
+  return m > 0 ? `${y}年${m}ヶ月` : `${y}年`;
+}
+
+function closeBoughtDialog(result) {
+  const dialog = document.getElementById('bought-dialog');
+  dialog.style.display = 'none';
+  document.body.style.overflow = '';
+  // AbortController でリスナーを一括クリーンアップ
+  if (_boughtDialogAC) { _boughtDialogAC.abort(); _boughtDialogAC = null; }
+
+  if (!result || result === false) return;
+
+  const id   = _boughtDialogId;
+  const item = state.items.find(i => i.id === id);
+  if (!item) return;
+
+  if (result === 'skip') {
+    // 通常サイズとして処理（従来と同じ）
+    _applyBought(id, item.unitQty);
+  } else {
+    // 入力されたサイズで処理
+    const qty = Number(document.getElementById('bought-qty-input').value);
+    _applyBought(id, qty > 0 ? qty : item.unitQty);
+  }
+}
+
+/**
+ * 購入を確定する
+ * qty: 今回の購入量（null なら従来通り lifeYears そのまま）
+ */
+function _applyBought(id, qty) {
   const today = new Date().toISOString().split('T')[0];
-  state.items = state.items.map(i =>
-    i.id === id ? { ...i, purchasedAt: today } : i
-  );
+  let didLearn = false;
+
+  state.items = state.items.map(i => {
+    if (i.id !== id) return i;
+
+    // 次回 lifeYears の計算
+    let newLifeYears = i.lifeYears;
+    let newPerDay    = i.perDay;
+    let newLastPurchase = i.lastPurchase ?? null;
+
+    if (qty && qty > 0) {
+      const { days, learned } = calcNextDays(i, qty);
+      newLifeYears = Math.max(0.01, Math.round(days / 365 * 1000) / 1000);
+
+      if (learned) {
+        // 実績から perDay を更新: 前回量 ÷ 経過日数
+        const elapsedDays = Math.max(1,
+          Math.ceil((new Date() - new Date(i.lastPurchase.date)) / (1000 * 60 * 60 * 24))
+        );
+        newPerDay = Math.round(i.lastPurchase.qty / elapsedDays * 10000) / 10000;
+        didLearn  = true;
+      }
+
+      // 今回の購入を lastPurchase として記録
+      newLastPurchase = { date: today, qty };
+    }
+
+    return {
+      ...i,
+      purchasedAt:   today,
+      lifeYears:     newLifeYears,
+      perDay:        newPerDay,
+      lastPurchase:  newLastPurchase,
+    };
+  });
+
   saveState();
   haptic('heavy');
-  showToast('✅ 購入日をリセットしました！');
+  showToast(`✅ 購入日をリセットしました！${didLearn ? '　🎓 ペースを学習しました' : ''}`);
   render();
+}
+
+/** 通常量ヒント（フォーム内） */
+function updateQtyHint() {
+  const qty   = Number(document.getElementById('input-unit-qty').value);
+  const label = document.getElementById('input-unit-label').value.trim();
+  const hint  = document.getElementById('qty-hint');
+  hint.textContent = (qty && label) ? `📦 通常は ${qty}${label} を購入` : '';
 }
 
 
@@ -1278,7 +1459,7 @@ function renderMigratePage() {
           <input id="fb-sync-code" placeholder="同期コード（例：home2024）" style="width:100%;height:44px;padding:0 12px;border:1.5px solid var(--c-primary);border-radius:var(--radius-s);font-size:15px;font-weight:700;letter-spacing:0.05em;">
         </div>
 
-        <button id="btn-fb-connect" class="tappable"
+        <button id="btn-fb-connect" data-action="fb-connect" class="tappable"
           style="width:100%;height:50px;background:var(--c-primary);color:#fff;border:none;border-radius:var(--radius-s);font-size:15px;font-weight:700;">
           🔗 同期を開始する
         </button>
@@ -1294,11 +1475,11 @@ function renderMigratePage() {
           </div>
         </div>
         <div style="display:flex;gap:8px;">
-          <button id="btn-fb-push" class="tappable"
+          <button id="btn-fb-push" data-action="fb-push" class="tappable"
             style="flex:1;height:44px;background:var(--c-success);color:#fff;border:none;border-radius:var(--radius-s);font-size:14px;font-weight:700;">
             ⬆️ 今すぐ同期
           </button>
-          <button id="btn-fb-disconnect" class="tappable"
+          <button id="btn-fb-disconnect" data-action="fb-disconnect" class="tappable"
             style="flex:1;height:44px;background:var(--c-surface);color:var(--c-danger);border:1.5px solid var(--c-danger);border-radius:var(--radius-s);font-size:14px;font-weight:700;">
             切断
           </button>
@@ -1313,11 +1494,11 @@ function renderMigratePage() {
             style="width:100%;height:44px;padding:0 12px;border:1.5px solid var(--c-primary);border-radius:var(--radius-s);font-size:15px;font-weight:700;margin-top:10px;letter-spacing:0.05em;">
         </div>
         <div style="display:flex;gap:8px;">
-          <button id="btn-fb-reconnect" class="tappable"
+          <button id="btn-fb-reconnect" data-action="fb-reconnect" class="tappable"
             style="flex:1;height:50px;background:var(--c-primary);color:#fff;border:none;border-radius:var(--radius-s);font-size:15px;font-weight:700;">
             🔗 再接続
           </button>
-          <button id="btn-fb-reset-cfg" class="tappable"
+          <button id="btn-fb-reset-cfg" data-action="fb-reset-cfg" class="tappable"
             style="width:80px;height:50px;background:var(--c-surface);color:var(--c-danger);border:1.5px solid var(--c-danger);border-radius:var(--radius-s);font-size:13px;font-weight:700;">
             設定削除
           </button>
@@ -1336,7 +1517,7 @@ function renderMigratePage() {
       <div style="background:var(--c-bg);border:1px solid var(--c-border);border-radius:var(--radius-m);padding:16px;box-shadow:var(--shadow-card);margin-bottom:16px;">
         <p style="font-size:14px;font-weight:700;color:var(--c-text);margin-bottom:6px;">📤 手動エクスポート</p>
         <p style="font-size:13px;color:var(--c-sub);margin-bottom:12px;line-height:1.6;">現在の${count}件をテキストとして書き出します（バックアップ用）。</p>
-        <button class="tappable" id="btn-export"
+        <button class="tappable" id="btn-export" data-action="export"
           style="width:100%;height:48px;background:var(--c-primary);color:#fff;border:none;border-radius:var(--radius-s);font-size:15px;font-weight:700;">
           データをエクスポート
         </button>
@@ -1344,7 +1525,7 @@ function renderMigratePage() {
           <p style="font-size:12px;color:var(--c-sub);margin-bottom:6px;">↓ このテキスト全体を長押しで選択してコピー</p>
           <textarea id="export-text" readonly
             style="width:100%;height:100px;padding:10px;border:1.5px solid var(--c-primary);border-radius:var(--radius-s);font-size:11px;font-family:monospace;resize:none;background:var(--c-surface);color:var(--c-text);box-sizing:border-box;"></textarea>
-          <button class="tappable" id="btn-copy-export"
+          <button class="tappable" id="btn-copy-export" data-action="copy-export"
             style="width:100%;height:44px;margin-top:8px;background:var(--c-surface);color:var(--c-text);border:1.5px solid var(--c-border);border-radius:var(--radius-s);font-size:14px;font-weight:600;">
             📋 テキストをコピー
           </button>
@@ -1356,7 +1537,7 @@ function renderMigratePage() {
         <p style="font-size:13px;color:var(--c-sub);margin-bottom:12px;line-height:1.6;">エクスポートしたテキストを貼り付けて読み込みます。現在のデータは上書きされます。</p>
         <textarea id="import-text" placeholder="エクスポートしたテキストをここに貼り付け"
           style="width:100%;height:100px;padding:10px;border:1.5px solid var(--c-border);border-radius:var(--radius-s);font-size:11px;font-family:monospace;resize:none;background:var(--c-bg);color:var(--c-text);box-sizing:border-box;outline:none;"></textarea>
-        <button class="tappable" id="btn-import"
+        <button class="tappable" id="btn-import" data-action="import"
           style="width:100%;height:48px;margin-top:10px;background:var(--c-success);color:#fff;border:none;border-radius:var(--radius-s);font-size:15px;font-weight:700;">
           データを読み込む
         </button>
@@ -1365,91 +1546,104 @@ function renderMigratePage() {
     </div>
   `;
 
-  // ── Firebase 接続ボタン ──
-  document.getElementById('btn-fb-connect')?.addEventListener('click', async () => {
-    const apiKey    = document.getElementById('fb-api-key')?.value.trim();
-    const projectId = document.getElementById('fb-project-id')?.value.trim();
-    const dbURL     = document.getElementById('fb-db-url')?.value.trim();
-    const appId     = document.getElementById('fb-app-id')?.value.trim() || 'replace-timer';
-    const code      = document.getElementById('fb-sync-code')?.value.trim();
-    if (!apiKey || !projectId || !dbURL || !code) {
-      showToast('⚠️ 必須項目（apiKey / projectId / databaseURL / 同期コード）を入力してください');
-      return;
+  // ── イベント委譲：migrate-page-content 全体で1つのリスナーを使い回す ──
+  // renderMigratePage は何度も呼ばれるため、innerHTML書き換え後に
+  // addEventListener を毎回追加するとリスナーが蓄積する。
+  // → data-action 属性でボタンを識別し、init() で一度だけ登録する委譲パターンに変更。
+  // （以下の関数は init() から呼ばれる）
+}
+
+/** データ移行ページのイベント委譲ハンドラ（init()で1回だけ登録） */
+async function onMigrateClick(e) {
+  const btn = e.target.closest('[data-action]');
+  if (!btn) return;
+
+  switch (btn.dataset.action) {
+    case 'fb-connect': {
+      const apiKey    = document.getElementById('fb-api-key')?.value.trim();
+      const projectId = document.getElementById('fb-project-id')?.value.trim();
+      const dbURL     = document.getElementById('fb-db-url')?.value.trim();
+      const appId     = document.getElementById('fb-app-id')?.value.trim() || 'replace-timer';
+      const code      = document.getElementById('fb-sync-code')?.value.trim();
+      if (!apiKey || !projectId || !dbURL || !code) {
+        showToast('⚠️ 必須項目（apiKey / projectId / databaseURL / 同期コード）を入力してください');
+        return;
+      }
+      const cfg = { apiKey, authDomain: `${projectId}.firebaseapp.com`, databaseURL: dbURL, projectId, appId };
+      await connectFirebase(cfg, code);
+      pushToFirebase();
+      break;
     }
-    const cfg = { apiKey, authDomain: `${projectId}.firebaseapp.com`, databaseURL: dbURL, projectId, appId };
-    await connectFirebase(cfg, code);
-    // 接続後はすぐに今のデータをアップロード
-    pushToFirebase();
-  });
-
-  // 再接続
-  document.getElementById('btn-fb-reconnect')?.addEventListener('click', async () => {
-    const cfg  = getFbConfig();
-    const code = document.getElementById('fb-sync-code-reconnect')?.value.trim() || getSyncCode();
-    if (!cfg || !code) { showToast('⚠️ 同期コードを入力してください'); return; }
-    await connectFirebase(cfg, code);
-  });
-
-  // 今すぐ同期
-  document.getElementById('btn-fb-push')?.addEventListener('click', async () => {
-    fb.ignoreNext = false;
-    await pushToFirebase();
-    showToast('⬆️ クラウドへ同期しました');
-    haptic();
-  });
-
-  // 切断
-  document.getElementById('btn-fb-disconnect')?.addEventListener('click', () => {
-    showConfirm('同期を停止しますか？', 'データはこの端末に残ります').then(ok => {
+    case 'fb-reconnect': {
+      const cfg  = getFbConfig();
+      const code = document.getElementById('fb-sync-code-reconnect')?.value.trim() || getSyncCode();
+      if (!cfg || !code) { showToast('⚠️ 同期コードを入力してください'); return; }
+      await connectFirebase(cfg, code);
+      break;
+    }
+    case 'fb-push': {
+      await pushToFirebase();
+      showToast('⬆️ クラウドへ同期しました');
+      haptic();
+      break;
+    }
+    case 'fb-disconnect': {
+      const ok = await showConfirm('同期を停止しますか？', 'データはこの端末に残ります');
       if (ok) disconnectFirebase();
-    });
-  });
-
-  // 設定削除
-  document.getElementById('btn-fb-reset-cfg')?.addEventListener('click', () => {
-    showConfirm('Firebase設定を削除しますか？', '同期が停止されます。再度使うには設定が必要です').then(ok => {
+      break;
+    }
+    case 'fb-reset-cfg': {
+      const ok = await showConfirm('Firebase設定を削除しますか？', '同期が停止されます。再度使うには設定が必要です');
       if (!ok) return;
       disconnectFirebase();
       try { localStorage.removeItem(FIREBASE_CFG_KEY); } catch {}
       renderMigratePage();
-    });
-  });
-
-  // エクスポート
-  document.getElementById('btn-export').addEventListener('click', () => {
-    const raw = localStorage.getItem(STORAGE_KEY) || JSON.stringify(state);
-    document.getElementById('export-text').value = raw;
-    document.getElementById('export-area').style.display = 'block';
-    haptic();
-  });
-
-  document.getElementById('btn-copy-export').addEventListener('click', () => {
-    const text = document.getElementById('export-text').value;
-    if (navigator.clipboard) {
-      navigator.clipboard.writeText(text)
-        .then(() => { showToast('📋 コピーしました！'); haptic(); })
-        .catch(() => { showToast('⚠️ 長押しで選択してコピーしてください'); });
-    } else {
-      document.getElementById('export-text').select();
-      document.execCommand('copy');
-      showToast('📋 コピーしました！');
+      break;
     }
-  });
-
-  // インポート
-  document.getElementById('btn-import').addEventListener('click', () => {
-    const text = document.getElementById('import-text').value.trim();
-    if (!text) { showToast('⚠️ テキストを貼り付けてください'); return; }
-    try {
-      const parsed = JSON.parse(text);
-      if (!Array.isArray(parsed.items)) throw new Error('データ形式が不正です');
-      parsed.items.forEach(item => {
-        if (!item.id || typeof item.name !== 'string') throw new Error('アイテムデータが不正です');
-      });
-      showConfirm(
-        `${parsed.items.length}件のデータを読み込みますか？`,
-        '現在のデータは上書きされます'
-      ).then(ok => {
+    case 'export': {
+      let raw;
+      try { raw = localStorage.getItem(STORAGE_KEY); } catch { raw = null; }
+      document.getElementById('export-text').value = raw || JSON.stringify(state);
+      document.getElementById('export-area').style.display = 'block';
+      haptic();
+      break;
+    }
+    case 'copy-export': {
+      const text = document.getElementById('export-text').value;
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(text)
+          .then(() => { showToast('📋 コピーしました！'); haptic(); })
+          .catch(() => { showToast('⚠️ 長押しで選択してコピーしてください'); });
+      } else {
+        document.getElementById('export-text').select();
+        document.execCommand('copy');
+        showToast('📋 コピーしました！');
+      }
+      break;
+    }
+    case 'import': {
+      const text = document.getElementById('import-text').value.trim();
+      if (!text) { showToast('⚠️ テキストを貼り付けてください'); return; }
+      try {
+        const parsed = JSON.parse(text);
+        if (!Array.isArray(parsed.items)) throw new Error('データ形式が不正です');
+        parsed.items.forEach(item => {
+          if (!item.id || typeof item.name !== 'string') throw new Error('アイテムデータが不正です');
+          // 新フィールドの値域チェック（C-2 / M-2対応）
+          if (item.unitQty  != null && (typeof item.unitQty  !== 'number' || item.unitQty  <= 0)) throw new Error('unitQtyの値が不正です');
+          if (item.perDay   != null && (typeof item.perDay   !== 'number' || item.perDay   <= 0)) throw new Error('perDayの値が不正です');
+          if (item.lifeYears != null && (typeof item.lifeYears !== 'number' || item.lifeYears <= 0)) throw new Error('lifeYearsの値が不正です');
+          if (item.lastPurchase != null) {
+            const lp = item.lastPurchase;
+            if (typeof lp !== 'object' || typeof lp.qty !== 'number' || lp.qty <= 0 || isNaN(new Date(lp.date).getTime())) {
+              throw new Error('lastPurchaseの値が不正です');
+            }
+          }
+        });
+        const ok = await showConfirm(
+          `${parsed.items.length}件のデータを読み込みますか？`,
+          '現在のデータは上書きされます'
+        );
         if (!ok) return;
         state.items = parsed.items;
         if (parsed.ui) state.ui = { ...state.ui, ...parsed.ui };
@@ -1457,11 +1651,12 @@ function renderMigratePage() {
         showToast(`✅ ${parsed.items.length}件を読み込みました`);
         haptic('heavy');
         showPage('home');
-      });
-    } catch(e) {
-      showToast('⚠️ データの読み込みに失敗しました。テキストを確認してください');
+      } catch(e) {
+        showToast('⚠️ データの読み込みに失敗しました。テキストを確認してください');
+      }
+      break;
     }
-  });
+  }
 }
 
 function renderRef() {
@@ -1497,21 +1692,22 @@ function renderRef() {
 =========================== */
 let editingId = null;
 
-function openAddModal() {
-  if (document.querySelector('#modal')?.style.display === 'flex') return;
+/** 追加モーダルの共通初期化（openAddModal / prefillFromRef で共用） */
+function _openAddModalBase() {
+  if (document.querySelector('#modal')?.style.display === 'flex') return false;
   editingId = null;
   document.getElementById('modal-title').textContent = 'アイテムを追加';
   document.getElementById('modal-save-btn').textContent = '追加する';
   clearModalForm();
+  document.getElementById('input-date').value = new Date().toISOString().split('T')[0];
+  return true;
+}
 
-  // デフォルトで今日の日付
-  const today = new Date().toISOString().split('T')[0];
-  document.getElementById('input-date').value = today;
-
+function openAddModal() {
+  if (!_openAddModalBase()) return;
   openModal();
   haptic();
 }
-
 
 
 function openModal() {
@@ -1545,13 +1741,11 @@ function clearModalForm() {
   document.getElementById('years-hint').textContent = '';
   document.getElementById('years-hint').style.color = '';
   document.querySelectorAll('.ferr').forEach(e => e.remove());
-  // ペースセクションをリセット
-  document.getElementById('pace-section').style.display = 'none';
-  document.getElementById('pace-fields').style.display = 'none';
-  document.getElementById('input-pace-total').value = '';
-  document.getElementById('input-pace-per-day').value = '';
-  document.getElementById('pace-result').textContent = '—';
-  document.getElementById('pace-ai-hint').textContent = '「AIで解析」をタップすると商品名から自動入力します';
+  // 通常量セクションをリセット
+  document.getElementById('qty-section').style.display = 'none';
+  document.getElementById('input-unit-qty').value = '';
+  document.getElementById('input-unit-label').value = '';
+  document.getElementById('qty-hint').textContent = '';
 }
 
 /* ===========================
@@ -1602,174 +1796,6 @@ function onSubcatChange() {
     hint.textContent = '';
   }
   updatePaceSectionVisibility();
-}
-
-/* ===========================
-   使用ペース計算
-=========================== */
-
-/** カテゴリに応じて使用ペースセクションの表示/非表示を切り替え */
-function updatePaceSectionVisibility() {
-  const cat = document.getElementById('input-category').value;
-  const paceSection = document.getElementById('pace-section');
-  // 消耗品カテゴリのみ表示
-  const consumableCategories = new Set(['daily', 'health', 'food']);
-  paceSection.style.display = consumableCategories.has(cat) ? 'block' : 'none';
-}
-
-/** 商品名からAIが枚数・容量・使用ペースを解析 */
-async function analyzePace() {
-  const name = document.getElementById('input-name').value.trim();
-  const memo = document.getElementById('input-memo').value.trim();
-  const hint = document.getElementById('pace-ai-hint');
-  const btn = document.getElementById('btn-pace-analyze');
-
-  if (!name) { showToast('⚠️ 先にアイテム名を入力してください'); return; }
-
-  btn.disabled = true;
-  btn.textContent = '解析中…';
-  hint.textContent = 'AIが商品名を解析しています…';
-
-  // 商品名から枚数・容量・標準使用ペースをルールベースで推定
-  const fullName = `${name} ${memo}`.toLowerCase();
-  const result = estimatePaceFromName(fullName);
-
-  if (result) {
-    applyPaceEstimate(result);
-    hint.textContent = `💡 AIが推定した値です。実際の使用頻度に合わせて調整してください`;
-  } else {
-    hint.textContent = '⚠️ 自動解析できませんでした。手動で入力してください';
-    showPaceFields();
-  }
-
-  btn.disabled = false;
-  btn.textContent = 'AIで解析';
-}
-
-/** 商品名・メモからルールベースで枚数・使用ペースを推定 */
-function estimatePaceFromName(text) {
-  // パターン: 数量 × 単位
-  const patterns = [
-    // 枚数系
-    { re: /(\d+)\s*枚/,          unit: '枚', defaultPerDay: 1   },
-    // 容量系（ml）
-    { re: /(\d+)\s*ml/i,         unit: 'ml', defaultPerDay: 10  },
-    // 容量系（g）
-    { re: /(\d+)\s*g(?!\S)/i,    unit: 'g',  defaultPerDay: 3   },
-    // ロール系
-    { re: /(\d+)\s*[ロールroll]/i, unit: '個', defaultPerDay: 0.5 },
-    // 個数系
-    { re: /(\d+)\s*個/,          unit: '個', defaultPerDay: 1   },
-    // 回数系
-    { re: /(\d+)\s*回/,          unit: '回', defaultPerDay: 1   },
-  ];
-
-  // 品目別の標準使用ペース上書き
-  const paceOverrides = [
-    { keywords: ['シートマスク', 'フェイスパック', 'パック'], unit: '枚', perDay: 3/7 }, // 週3枚
-    { keywords: ['コンタクト', 'ワンデー'],                  unit: '枚', perDay: 2   }, // 1日2枚(両目)
-    { keywords: ['ティッシュ', 'ティシュ'],                  unit: '箱', perDay: 1/30 },// 1箱/月
-    { keywords: ['トイレットペーパー', 'トイレット'],        unit: '個', perDay: 1/7  }, // 週1ロール
-    { keywords: ['キッチンペーパー'],                        unit: '個', perDay: 1/7  },
-    { keywords: ['洗顔', 'クレンジング'],                    unit: 'ml', perDay: 5    }, // 1回5ml×2
-    { keywords: ['ボディソープ', 'ボディウォッシュ', 'ハンドソープ'], unit: 'ml', perDay: 20 },
-    { keywords: ['シャンプー', 'コンディショナー'],         unit: 'ml', perDay: 15   },
-    { keywords: ['マウスウォッシュ', '洗口液'],             unit: 'ml', perDay: 30   },
-    { keywords: ['洗濯'],                                    unit: 'ml', perDay: 50   },
-    { keywords: ['食器用洗剤', '食器洗剤'],                 unit: 'ml', perDay: 15   },
-    { keywords: ['消臭'],                                    unit: '個', perDay: 1/90 }, // 3ヶ月/個
-    { keywords: ['ゴミ袋'],                                  unit: '枚', perDay: 1    },
-    { keywords: ['クリーナー', 'お掃除'],                   unit: 'ml', perDay: 10   },
-  ];
-
-  // 品目ペースの上書きチェック
-  let overridePerDay = null;
-  let overrideUnit = null;
-  for (const o of paceOverrides) {
-    if (o.keywords.some(k => text.includes(k))) {
-      overridePerDay = o.perDay;
-      overrideUnit = o.unit;
-      break;
-    }
-  }
-
-  // 総量の抽出
-  for (const p of patterns) {
-    const m = text.match(p.re);
-    if (m) {
-      const total = Number(m[1]);
-      const unit = overrideUnit || p.unit;
-      const perDay = overridePerDay ?? p.defaultPerDay;
-      return { total, unit, perDay };
-    }
-  }
-
-  // 総量が取れなくてもペースのみわかる場合
-  if (overridePerDay !== null) {
-    return { total: null, unit: overrideUnit, perDay: overridePerDay };
-  }
-
-  return null;
-}
-
-/** 推定結果をフォームに反映して計算する */
-function applyPaceEstimate(result) {
-  showPaceFields();
-  if (result.total !== null) {
-    document.getElementById('input-pace-total').value = result.total;
-  }
-  const unitVal = result.unit;
-  document.getElementById('input-pace-unit').value = unitVal;
-  document.getElementById('input-pace-unit2').value = unitVal;
-  document.getElementById('input-pace-per-day').value = Number(result.perDay.toFixed(3));
-  calcPaceResult();
-}
-
-/** ペースフィールドを表示 */
-function showPaceFields() {
-  document.getElementById('pace-fields').style.display = 'block';
-}
-
-/** 総量 ÷ 1日使用量 → 買い替え目安（年）を計算して表示 */
-function calcPaceResult() {
-  const total   = Number(document.getElementById('input-pace-total').value);
-  const perDay  = Number(document.getElementById('input-pace-per-day').value);
-  const resultEl = document.getElementById('pace-result');
-
-  if (!total || !perDay || perDay <= 0) {
-    resultEl.textContent = '—';
-    return;
-  }
-
-  const days = total / perDay;
-  const years = days / 365;
-
-  let label;
-  if (days < 14)       label = `約${Math.round(days)}日`;
-  else if (days < 60)  label = `約${Math.round(days / 7)}週間`;
-  else if (days < 365) label = `約${Math.round(days / 30)}ヶ月`;
-  else                 label = `約${years.toFixed(1)}年`;
-
-  resultEl.textContent = label;
-  // 計算結果をinput-years/input-monthsにプレビュー反映
-  const totalYears = Math.max(0.01, Number(years.toFixed(3)));
-  const { years: fy, months: fm } = fromLifeYears(totalYears);
-  document.getElementById('input-years').value  = fy;
-  document.getElementById('input-months').value = fm;
-  document.getElementById('years-hint').textContent = `📊 使用ペースから算出: ${label}`;
-}
-
-/** 「この値を反映する」ボタン */
-function applyPaceToYears() {
-  const total  = Number(document.getElementById('input-pace-total').value);
-  const perDay = Number(document.getElementById('input-pace-per-day').value);
-  if (!total || !perDay || perDay <= 0) {
-    showToast('⚠️ 総量と1日使用量を入力してください');
-    return;
-  }
-  calcPaceResult();
-  showToast('✅ 買い替え目安を更新しました');
-  haptic();
 }
 
 /* ===========================
@@ -1846,6 +1872,9 @@ function saveItem() {
     categoryLabel: catLabel,
     subcat:        subcatKey,
     subcatLabel:   subcatLabel,
+    // 通常量・ペース（消耗品向け）
+    unitQty:   Number(document.getElementById('input-unit-qty').value)   || null,
+    unitLabel: document.getElementById('input-unit-label').value.trim()  || null,
   };
 
   if (editingId) {
@@ -1888,6 +1917,8 @@ function saveItem() {
 =========================== */
 let confirmResolve = null;
 
+let _confirmAC = null;
+
 function showConfirm(msg, sub = '') {
   return new Promise(resolve => {
     confirmResolve = resolve;
@@ -1896,12 +1927,18 @@ function showConfirm(msg, sub = '') {
     const dialog = document.getElementById('confirm-dialog');
     dialog.style.display = 'flex';
     document.body.style.overflow = 'hidden';
+    if (_confirmAC) _confirmAC.abort();
+    _confirmAC = new AbortController();
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeConfirm(false);
+    }, { signal: _confirmAC.signal });
   });
 }
 
 function closeConfirm(result) {
   document.getElementById('confirm-dialog').style.display = 'none';
   document.body.style.overflow = '';
+  if (_confirmAC) { _confirmAC.abort(); _confirmAC = null; }
   if (confirmResolve) { confirmResolve(result); confirmResolve = null; }
 }
 
@@ -1922,17 +1959,9 @@ async function deleteItem(id) {
    参考ページから追加
 =========================== */
 function prefillFromRef(catKey, subcatKey) {
-  if (document.querySelector('#modal')?.style.display === 'flex') return;
-  editingId = null;
-  document.getElementById('modal-title').textContent = 'アイテムを追加';
-  document.getElementById('modal-save-btn').textContent = '追加する';
-  clearModalForm();
-
-  const today = new Date().toISOString().split('T')[0];
-  document.getElementById('input-date').value = today;
+  if (!_openAddModalBase()) return;
   document.getElementById('input-category').value = catKey;
   onCategoryChange(subcatKey);
-
   openModal();
   haptic();
 }
@@ -1976,6 +2005,14 @@ function openEditModal(id) {
   catSel.value = item.category || '';
   onCategoryChange(item.subcat);
 
+  // 通常量・ペースを復元
+  if (item.unitQty) {
+    document.getElementById('input-unit-qty').value   = item.unitQty;
+    document.getElementById('input-unit-label').value = item.unitLabel || '';
+    updateQtyHint();
+  }
+
+
   openModal();
   haptic();
 }
@@ -1990,7 +2027,7 @@ function checkAndNotify() {
   const over  = state.items.filter(i => getDaysInfo(i).daysLeft < 0);
   const soon  = state.items.filter(i => {
     const d = getDaysInfo(i).daysLeft;
-    return d >= 0 && d <= NOTIFY_DAYS;
+    return d >= 0 && d <= SOON_DAYS;
   });
 
   if (over.length === 0 && soon.length === 0) return;
@@ -2035,7 +2072,7 @@ function showNotify({ icon, title, body, page }) {
   banner.style.animation = 'none';
   // アニメーションを再トリガー
   requestAnimationFrame(() => {
-    banner.style.animation = 'slideDown 0.3s ease';
+    banner.style.animation = 'slideDown var(--duration-slow) ease';
   });
 
   // 8秒後に自動で閉じる
@@ -2049,7 +2086,7 @@ function dismissNotify() {
   clearTimeout(notifyTimer);
   const banner = document.getElementById('notify-banner');
   banner.style.opacity = '0';
-  banner.style.transition = 'opacity 0.25s ease';
+  banner.style.transition = 'opacity var(--duration-normal) ease';
   setTimeout(() => {
     banner.style.display = 'none';
     banner.style.opacity = '';
@@ -2079,10 +2116,13 @@ function init() {
   // イベント委譲：モーダル内の削除ボタン
   document.getElementById('modal').addEventListener('click', onModalClick);
 
-  // ペース入力フィールドのリアルタイム計算
-  ['input-pace-total', 'input-pace-per-day'].forEach(id => {
-    document.getElementById(id).addEventListener('input', calcPaceResult);
+  // 通常量フィールドのリアルタイムヒント更新
+  ['input-unit-qty', 'input-unit-label'].forEach(id => {
+    document.getElementById(id).addEventListener('input', updateQtyHint);
   });
+
+  // C-1: データ移行ページのイベント委譲（1回だけ登録）
+  document.getElementById('migrate-page-content').addEventListener('click', onMigrateClick);
 
   showPage(state.ui.page || 'home');
 
@@ -2122,11 +2162,6 @@ function onModalClick(e) {
     const id = btn.dataset.id;
     if (id) deleteItem(id);
     return;
-  }
-
-  switch(btn.id) {
-    case 'btn-pace-analyze': analyzePace(); break;
-    case 'btn-pace-apply':   applyPaceToYears(); break;
   }
 }
 
