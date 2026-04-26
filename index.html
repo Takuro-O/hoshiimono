@@ -1777,7 +1777,7 @@ function onCategoryChange(defaultSubcat) {
     onSubcatChange();
   }
 
-  updatePaceSectionVisibility();
+  updateQtySectionVisibility();
 }
 
 function onSubcatChange() {
@@ -1795,7 +1795,22 @@ function onSubcatChange() {
   } else {
     hint.textContent = '';
   }
-  updatePaceSectionVisibility();
+  updateQtySectionVisibility();
+}
+
+/** カテゴリに応じて通常量セクションの表示/非表示を切り替え */
+function updateQtySectionVisibility() {
+  const cat = document.getElementById('input-category').value;
+  const qtySection = document.getElementById('qty-section');
+  const consumableCategories = new Set(['daily', 'health', 'food']);
+  const show = consumableCategories.has(cat);
+  qtySection.style.display = show ? 'block' : 'none';
+  if (!show) {
+    document.getElementById('input-unit-qty').value   = '';
+    document.getElementById('input-unit-label').value = '';
+    document.getElementById('qty-hint').textContent   = '';
+  }
+  updateQtyHint();
 }
 
 /* ===========================
@@ -1960,9 +1975,9 @@ async function deleteItem(id) {
 =========================== */
 function prefillFromRef(catKey, subcatKey) {
   if (!_openAddModalBase()) return;
+  openModal();  // 先にモーダルを表示してからフォームを初期化
   document.getElementById('input-category').value = catKey;
   onCategoryChange(subcatKey);
-  openModal();
   haptic();
 }
 
