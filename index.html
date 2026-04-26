@@ -373,10 +373,16 @@ a { color: inherit; text-decoration: none; }
     </div>
 
     <div class="form-group">
-      <label class="form-label" for="input-years">買い替え目安（年）<span style="color:var(--c-danger);">*</span></label>
-      <div style="display:flex;align-items:center;gap:12px;">
-        <input id="input-years" class="form-input" type="number" min="0.1" max="50" step="0.5" placeholder="例: 5" style="flex:1;" inputmode="decimal" required>
-        <span style="font-size:14px;color:var(--c-sub);white-space:nowrap;">年後に交換</span>
+      <p class="form-label" id="label-lifetime">買い替え目安 <span style="color:var(--c-danger);">*</span></p>
+      <div style="display:flex;align-items:center;gap:8px;" role="group" aria-labelledby="label-lifetime">
+        <label for="input-years" style="display:flex;align-items:center;gap:6px;flex:1;">
+          <input id="input-years" class="form-input" type="number" min="0" max="99" step="1" placeholder="0" style="flex:1;text-align:center;" inputmode="numeric" aria-label="年" aria-required="true">
+          <span style="font-size:14px;color:var(--c-sub);white-space:nowrap;flex-shrink:0;">年</span>
+        </label>
+        <label for="input-months" style="display:flex;align-items:center;gap:6px;flex:1;">
+          <input id="input-months" class="form-input" type="number" min="0" max="11" step="1" placeholder="0" style="flex:1;text-align:center;" inputmode="numeric" aria-label="ヶ月">
+          <span style="font-size:14px;color:var(--c-sub);white-space:nowrap;flex-shrink:0;">ヶ月後に交換</span>
+        </label>
       </div>
       <p id="years-hint" style="font-size:12px;color:var(--c-primary);margin-top:4px;"></p>
     </div>
@@ -677,6 +683,33 @@ function updateBadge(id, count) {
 
 function genId() {
   return crypto.randomUUID?.() ?? `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+}
+
+/* ===========================
+   年・月 <-> lifeYears 変換
+=========================== */
+/** 年・月の整数 → lifeYears（年の小数）に変換 */
+function toLifeYears(years, months) {
+  const y = Math.max(0, parseInt(years) || 0);
+  const m = Math.max(0, Math.min(11, parseInt(months) || 0));
+  return y + m / 12;
+}
+
+/** lifeYears → {years, months} に分解 */
+function fromLifeYears(lifeYears) {
+  const totalMonths = Math.round(lifeYears * 12);
+  return {
+    years: Math.floor(totalMonths / 12),
+    months: totalMonths % 12
+  };
+}
+
+/** lifeYearsを「X年Yヶ月」形式の文字列に */
+function formatLifeYears(lifeYears) {
+  const { years, months } = fromLifeYears(lifeYears);
+  if (years === 0) return `${months}ヶ月`;
+  if (months === 0) return `${years}年`;
+  return `${years}年${months}ヶ月`;
 }
 
 /* ===========================
@@ -1157,7 +1190,7 @@ function renderRef() {
             <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 14px;${i > 0 ? 'border-top:1px solid var(--c-border);' : ''}">
               <span style="font-size:15px;">${escapeHtml(item.label)}</span>
               <div style="display:flex;align-items:center;gap:8px;">
-                <span style="font-size:14px;font-weight:700;color:var(--c-primary);">${item.years < 1 ? Math.round(item.years * 12) + 'ヶ月' : item.years + '年'}</span>
+                <span style="font-size:14px;font-weight:700;color:var(--c-primary);">${formatLifeYears(item.years)}</span>
                 <button class="tappable" data-action="prefill" data-cat="${escapeHtml(key)}" data-subcat="${escapeHtml(item.key)}" style="height:28px;padding:0 10px;border:1.5px solid var(--c-primary);border-radius:14px;background:transparent;font-size:12px;font-weight:600;color:var(--c-primary);" aria-label="${escapeHtml(item.label)}を追加">＋追加</button>
               </div>
             </div>
@@ -1213,13 +1246,14 @@ function closeModal() {
 }
 
 function clearModalForm() {
-  ['input-name','input-date','input-years','input-memo'].forEach(id => {
+  ['input-name','input-date','input-years','input-months','input-memo'].forEach(id => {
     document.getElementById(id).value = '';
     document.getElementById(id).style.borderColor = '';
   });
   document.getElementById('input-category').value = '';
   document.getElementById('input-subcat').innerHTML = '<option value="">先にカテゴリを選択</option>';
   document.getElementById('years-hint').textContent = '';
+  document.getElementById('years-hint').style.color = '';
   document.querySelectorAll('.ferr').forEach(e => e.remove());
   // ペースセクションをリセット
   document.getElementById('pace-section').style.display = 'none';
@@ -1252,7 +1286,7 @@ function onCategoryChange(defaultSubcat) {
   }
 
   subSel.innerHTML = '<option value="">種類を選択（任意）</option>' +
-    items.map(i => `<option value="${escapeHtml(i.key)}" data-years="${i.years}">${escapeHtml(i.label)}（目安: ${i.years < 1 ? Math.round(i.years*12)+'ヶ月' : i.years+'年'}）</option>`).join('');
+    items.map(i => `<option value="${escapeHtml(i.key)}" data-years="${i.years}">${escapeHtml(i.label)}（目安: ${formatLifeYears(i.years)}）</option>`).join('');
 
   if (defaultSubcat) {
     subSel.value = defaultSubcat;
@@ -1265,13 +1299,15 @@ function onCategoryChange(defaultSubcat) {
 function onSubcatChange() {
   const subSel = document.getElementById('input-subcat');
   const selected = subSel.options[subSel.selectedIndex];
-  const years = selected?.dataset.years;
+  const yearsRaw = selected?.dataset.years;
   const hint = document.getElementById('years-hint');
-  const yearsInput = document.getElementById('input-years');
 
-  if (years) {
-    yearsInput.value = years;
-    hint.textContent = `💡 ${selected.text.split('（')[0]} の目安: ${Number(years) < 1 ? Math.round(Number(years)*12)+'ヶ月' : years+'年'}`;
+  if (yearsRaw) {
+    const lifeY = Number(yearsRaw);
+    const { years: fy, months: fm } = fromLifeYears(lifeY);
+    document.getElementById('input-years').value  = fy;
+    document.getElementById('input-months').value = fm;
+    hint.textContent = `💡 ${selected.text.split('（')[0]} の目安: ${formatLifeYears(lifeY)}`;
   } else {
     hint.textContent = '';
   }
@@ -1425,8 +1461,11 @@ function calcPaceResult() {
   else                 label = `約${years.toFixed(1)}年`;
 
   resultEl.textContent = label;
-  // 計算結果をinput-yearsにプレビュー反映
-  document.getElementById('input-years').value = Math.max(0.01, Number(years.toFixed(3)));
+  // 計算結果をinput-years/input-monthsにプレビュー反映
+  const totalYears = Math.max(0.01, Number(years.toFixed(3)));
+  const { years: fy, months: fm } = fromLifeYears(totalYears);
+  document.getElementById('input-years').value  = fy;
+  document.getElementById('input-months').value = fm;
   document.getElementById('years-hint').textContent = `📊 使用ペースから算出: ${label}`;
 }
 
@@ -1470,20 +1509,34 @@ function saveItem() {
   const saveBtn = document.getElementById('modal-save-btn');
   if (saveBtn.disabled) return; // ダブルタップ防止
 
-  const nameInput  = document.getElementById('input-name');
-  const dateInput  = document.getElementById('input-date');
-  const yearsInput = document.getElementById('input-years');
-  const catSel     = document.getElementById('input-category');
-  const subSel     = document.getElementById('input-subcat');
-  const memoInput  = document.getElementById('input-memo');
+  const nameInput   = document.getElementById('input-name');
+  const dateInput   = document.getElementById('input-date');
+  const yearsInput  = document.getElementById('input-years');
+  const monthsInput = document.getElementById('input-months');
+  const catSel      = document.getElementById('input-category');
+  const subSel      = document.getElementById('input-subcat');
+  const memoInput   = document.getElementById('input-memo');
 
   let valid = true;
 
-  clearError(nameInput); clearError(dateInput); clearError(yearsInput);
+  clearError(nameInput); clearError(dateInput);
+  // 年・月フィールドのエラーは years-hint に表示
+  const lifetimeHint = document.getElementById('years-hint');
+  yearsInput.style.borderColor = '';
+  monthsInput.style.borderColor = '';
+  lifetimeHint.style.color = '';
 
   if (!nameInput.value.trim()) { showError(nameInput, 'アイテム名を入力してください'); valid = false; }
   if (!dateInput.value) { showError(dateInput, '購入日を入力してください'); valid = false; }
-  if (!yearsInput.value || Number(yearsInput.value) <= 0) { showError(yearsInput, '0より大きい値を入力してください'); valid = false; }
+
+  const lifeYearsVal = toLifeYears(yearsInput.value, monthsInput.value);
+  if (lifeYearsVal <= 0) {
+    yearsInput.style.borderColor = 'var(--c-danger)';
+    monthsInput.style.borderColor = 'var(--c-danger)';
+    lifetimeHint.textContent = '年または月を1以上入力してください';
+    lifetimeHint.style.color = 'var(--c-danger)';
+    valid = false;
+  }
 
   if (!valid) return;
 
@@ -1497,7 +1550,7 @@ function saveItem() {
   const itemData = {
     name:          nameInput.value.trim(),
     purchasedAt:   dateInput.value,
-    lifeYears:     Number(yearsInput.value),
+    lifeYears:     lifeYearsVal,
     memo:          memoInput.value.trim(),
     category:      catKey,
     categoryLabel: catLabel,
@@ -1624,7 +1677,9 @@ function openEditModal(id) {
   document.getElementById('modal-save-btn').textContent = '更新する';
   document.getElementById('input-name').value = item.name;
   document.getElementById('input-date').value = item.purchasedAt;
-  document.getElementById('input-years').value = item.lifeYears;
+  const { years: ey, months: em } = fromLifeYears(item.lifeYears);
+  document.getElementById('input-years').value  = ey;
+  document.getElementById('input-months').value = em;
   document.getElementById('input-memo').value = item.memo || '';
 
   const catSel = document.getElementById('input-category');
