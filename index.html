@@ -6,6 +6,12 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#3B82F6">
 <title>買い替えタイマー</title>
+<!-- Firebase SDK (Realtime Database) -->
+<script type="module">
+  // Firebase は後ほど同期コードブロック内で動的に読み込む
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;600;700;800&display=swap" rel="stylesheet">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iYmciIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjojM0I4MkY2Ii8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6IzFENEVEOCIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0ic2hpbmUiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3R5bGU9InN0b3AtY29sb3I6I2ZmZmZmZjtzdG9wLW9wYWNpdHk6MC4xNSIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiNmZmZmZmY7c3RvcC1vcGFjaXR5OjAiLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgPC9kZWZzPgoKICA8cmVjdCB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgcng9IjExMCIgZmlsbD0idXJsKCNiZykiLz4KICA8cmVjdCB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgcng9IjExMCIgZmlsbD0idXJsKCNzaGluZSkiLz4KICA8Y2lyY2xlIGN4PSIyNTYiIGN5PSIyNDAiIHI9IjE2OCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIyMiIgb3BhY2l0eT0iMC45NSIvPgogIDxjaXJjbGUgY3g9IjI1NiIgY3k9IjI0MCIgcj0iMTQ1IiBmaWxsPSJ3aGl0ZSIgb3BhY2l0eT0iMC4xMiIvPgogIDxyZWN0IHg9IjI0OCIgeT0iODgiIHdpZHRoPSIxNiIgaGVpZ2h0PSIzMiIgcng9IjgiIGZpbGw9IndoaXRlIiBvcGFjaXR5PSIwLjkiLz4KICA8cmVjdCB4PSIyNDgiIHk9IjM2MCIgd2lkdGg9IjE2IiBoZWlnaHQ9IjMyIiByeD0iOCIgZmlsbD0id2hpdGUiIG9wYWNpdHk9IjAuOSIvPgogIDxyZWN0IHg9Ijg4IiB5PSIyMzIiIHdpZHRoPSIzMiIgaGVpZ2h0PSIxNiIgcng9IjgiIGZpbGw9IndoaXRlIiBvcGFjaXR5PSIwLjkiLz4KICA8cmVjdCB4PSIzNjAiIHk9IjIzMiIgd2lkdGg9IjMyIiBoZWlnaHQ9IjE2IiByeD0iOCIgZmlsbD0id2hpdGUiIG9wYWNpdHk9IjAuOSIvPgogIDxsaW5lIHgxPSIyNTYiIHkxPSIyNDAiIHgyPSIxOTQiIHkyPSIxNTYiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMjAiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgb3BhY2l0eT0iMC45NSIvPgogIDxsaW5lIHgxPSIyNTYiIHkxPSIyNDAiIHgyPSIzMjQiIHkyPSIxNDgiIHN0cm9rZT0iI0ZDRDM0RCIgc3Ryb2tlLXdpZHRoPSIxNiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CiAgPGNpcmNsZSBjeD0iMjU2IiBjeT0iMjQwIiByPSIxOCIgZmlsbD0id2hpdGUiLz4KICA8Y2lyY2xlIGN4PSIyNTYiIGN5PSIyNDAiIHI9IjEwIiBmaWxsPSIjMUQ0RUQ4Ii8+CiAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMjk2LCAzMjgpIj4KICAgIDxjaXJjbGUgY3g9IjcyIiBjeT0iNzIiIHI9IjcyIiBmaWxsPSIjRkNEMzREIi8+CiAgICA8cGF0aCBkPSJNMjggMzYgTDM2IDM2IEw1MiA4OCBMMTAwIDg4IEwxMTIgNTIgTDQ0IDUyIiBmaWxsPSJub25lIiBzdHJva2U9IiMxRDRFRDgiIHN0cm9rZS13aWR0aD0iOSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CiAgICA8Y2lyY2xlIGN4PSI1NiIgY3k9IjEwMiIgcj0iMTAiIGZpbGw9IiMxRDRFRDgiLz4KICAgIDxjaXJjbGUgY3g9Ijk2IiBjeT0iMTAyIiByPSIxMCIgZmlsbD0iIzFENEVEOCIvPgogIDwvZz4KPC9zdmc+">
 <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iYmciIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjojM0I4MkY2Ii8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6IzFENEVEOCIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0ic2hpbmUiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3R5bGU9InN0b3AtY29sb3I6I2ZmZmZmZjtzdG9wLW9wYWNpdHk6MC4xNSIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiNmZmZmZmY7c3RvcC1vcGFjaXR5OjAiLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgPC9kZWZzPgoKICA8cmVjdCB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgcng9IjExMCIgZmlsbD0idXJsKCNiZykiLz4KICA8cmVjdCB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgcng9IjExMCIgZmlsbD0idXJsKCNzaGluZSkiLz4KICA8Y2lyY2xlIGN4PSIyNTYiIGN5PSIyNDAiIHI9IjE2OCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIyMiIgb3BhY2l0eT0iMC45NSIvPgogIDxjaXJjbGUgY3g9IjI1NiIgY3k9IjI0MCIgcj0iMTQ1IiBmaWxsPSJ3aGl0ZSIgb3BhY2l0eT0iMC4xMiIvPgogIDxyZWN0IHg9IjI0OCIgeT0iODgiIHdpZHRoPSIxNiIgaGVpZ2h0PSIzMiIgcng9IjgiIGZpbGw9IndoaXRlIiBvcGFjaXR5PSIwLjkiLz4KICA8cmVjdCB4PSIyNDgiIHk9IjM2MCIgd2lkdGg9IjE2IiBoZWlnaHQ9IjMyIiByeD0iOCIgZmlsbD0id2hpdGUiIG9wYWNpdHk9IjAuOSIvPgogIDxyZWN0IHg9Ijg4IiB5PSIyMzIiIHdpZHRoPSIzMiIgaGVpZ2h0PSIxNiIgcng9IjgiIGZpbGw9IndoaXRlIiBvcGFjaXR5PSIwLjkiLz4KICA8cmVjdCB4PSIzNjAiIHk9IjIzMiIgd2lkdGg9IjMyIiBoZWlnaHQ9IjE2IiByeD0iOCIgZmlsbD0id2hpdGUiIG9wYWNpdHk9IjAuOSIvPgogIDxsaW5lIHgxPSIyNTYiIHkxPSIyNDAiIHgyPSIxOTQiIHkyPSIxNTYiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMjAiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgb3BhY2l0eT0iMC45NSIvPgogIDxsaW5lIHgxPSIyNTYiIHkxPSIyNDAiIHgyPSIzMjQiIHkyPSIxNDgiIHN0cm9rZT0iI0ZDRDM0RCIgc3Ryb2tlLXdpZHRoPSIxNiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CiAgPGNpcmNsZSBjeD0iMjU2IiBjeT0iMjQwIiByPSIxOCIgZmlsbD0id2hpdGUiLz4KICA8Y2lyY2xlIGN4PSIyNTYiIGN5PSIyNDAiIHI9IjEwIiBmaWxsPSIjMUQ0RUQ4Ii8+CiAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMjk2LCAzMjgpIj4KICAgIDxjaXJjbGUgY3g9IjcyIiBjeT0iNzIiIHI9IjcyIiBmaWxsPSIjRkNEMzREIi8+CiAgICA8cGF0aCBkPSJNMjggMzYgTDM2IDM2IEw1MiA4OCBMMTAwIDg4IEwxMTIgNTIgTDQ0IDUyIiBmaWxsPSJub25lIiBzdHJva2U9IiMxRDRFRDgiIHN0cm9rZS13aWR0aD0iOSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CiAgICA8Y2lyY2xlIGN4PSI1NiIgY3k9IjEwMiIgcj0iMTAiIGZpbGw9IiMxRDRFRDgiLz4KICAgIDxjaXJjbGUgY3g9Ijk2IiBjeT0iMTAyIiByPSIxMCIgZmlsbD0iIzFENEVEOCIvPgogIDwvZz4KPC9zdmc+">
 <style>
@@ -483,6 +489,146 @@ a { color: inherit; text-decoration: none; }
 'use strict';
 
 /* ===========================
+   Firebase リアルタイム同期
+=========================== */
+const SYNC_CODE_KEY = 'replace_timer_sync_code';
+const FIREBASE_CFG_KEY = 'replace_timer_firebase_cfg';
+
+const fb = {
+  db: null,           // Firebase Database インスタンス
+  ref: null,          // 現在リスニング中のパス
+  unsubscribe: null,  // リスナー解除関数
+  syncCode: null,     // 現在の同期コード
+  status: 'off',      // off | connecting | online | error
+  ignoreNext: false,  // 自分の書き込みによる受信をスキップ
+};
+
+/** 保存済みFirebase設定を返す（なければnull） */
+function getFbConfig() {
+  try {
+    const raw = localStorage.getItem(FIREBASE_CFG_KEY);
+    return raw ? JSON.parse(raw) : null;
+  } catch { return null; }
+}
+
+/** Firebase設定を保存 */
+function saveFbConfig(cfg) {
+  try { localStorage.setItem(FIREBASE_CFG_KEY, JSON.stringify(cfg)); } catch {}
+}
+
+/** 同期コードを保存・取得 */
+function getSyncCode() {
+  return localStorage.getItem(SYNC_CODE_KEY) || null;
+}
+function saveSyncCode(code) {
+  localStorage.setItem(SYNC_CODE_KEY, code);
+}
+
+/** 同期ステータスUI更新 */
+function updateSyncStatusUI() {
+  const el = document.getElementById('sync-status-bar');
+  if (!el) return;
+  const icons = { off: '⚪', connecting: '🟡', online: '🟢', error: '🔴' };
+  const labels = { off: '同期オフ', connecting: '接続中…', online: 'リアルタイム同期中', error: '接続エラー' };
+  el.innerHTML = `<span style="font-size:13px;">${icons[fb.status]} ${labels[fb.status]}</span>`;
+  el.style.color = fb.status === 'online' ? 'var(--c-success)' : fb.status === 'error' ? 'var(--c-danger)' : 'var(--c-sub)';
+}
+
+/** Firebase初期化 + 指定コードへの接続 */
+async function connectFirebase(config, syncCode) {
+  try {
+    // 既存リスナーを解除
+    if (fb.unsubscribe) { fb.unsubscribe(); fb.unsubscribe = null; }
+
+    fb.status = 'connecting';
+    updateSyncStatusUI();
+    renderMigratePage();
+
+    // 動的インポート
+    const { initializeApp, getApps } = await import('https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js');
+    const { getDatabase, ref, onValue, set } = await import('https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js');
+
+    // すでに同じプロジェクトで初期化済みなら再利用
+    let app;
+    const existing = getApps().find(a => a.options.projectId === config.projectId);
+    app = existing || initializeApp(config, config.projectId);
+
+    fb.db = getDatabase(app);
+    fb.syncCode = syncCode;
+
+    const dbRef = ref(fb.db, `syncRooms/${syncCode}/data`);
+    fb.ref = dbRef;
+
+    // リアルタイムリスナー
+    const unsub = onValue(dbRef, (snapshot) => {
+      if (fb.ignoreNext) { fb.ignoreNext = false; return; }
+      const data = snapshot.val();
+      if (!data) return; // まだデータなし
+      try {
+        const parsed = typeof data === 'string' ? JSON.parse(data) : data;
+        if (!Array.isArray(parsed.items)) return;
+        // タイムスタンプ比較：サーバーの方が新しい時だけ適用
+        const serverTs = parsed._syncTs || 0;
+        const localTs  = state._syncTs  || 0;
+        if (serverTs <= localTs) return;
+        state.items = parsed.items;
+        state._syncTs = serverTs;
+        _saveStateNow();
+        render();
+        showToast('☁️ 他の端末から同期しました');
+      } catch {}
+    }, (err) => {
+      fb.status = 'error';
+      updateSyncStatusUI();
+    });
+
+    fb.unsubscribe = unsub;
+    fb.status = 'online';
+
+    // Firebase set を fbSet として保存（他所から使えるように）
+    fb._set = (val) => set(dbRef, val);
+
+    updateSyncStatusUI();
+    renderMigratePage();
+    showToast('🟢 リアルタイム同期を開始しました');
+    saveFbConfig(config);
+    saveSyncCode(syncCode);
+
+  } catch(err) {
+    console.error('Firebase接続エラー:', err);
+    fb.status = 'error';
+    updateSyncStatusUI();
+    renderMigratePage();
+    showToast('🔴 Firebase接続に失敗しました。設定を確認してください。');
+  }
+}
+
+/** 同期を切断 */
+function disconnectFirebase() {
+  if (fb.unsubscribe) { fb.unsubscribe(); fb.unsubscribe = null; }
+  fb.db = null;
+  fb.ref = null;
+  fb.syncCode = null;
+  fb.status = 'off';
+  updateSyncStatusUI();
+  renderMigratePage();
+  showToast('⚪ 同期を停止しました');
+}
+
+/** データをFirebaseにアップロード（保存のたびに呼ぶ） */
+async function pushToFirebase() {
+  if (fb.status !== 'online' || !fb._set) return;
+  try {
+    fb.ignoreNext = true; // 自分の書き込みによる受信をスキップ
+    const payload = JSON.stringify({ items: state.items, _syncTs: Date.now() });
+    await fb._set(payload);
+  } catch(err) {
+    fb.ignoreNext = false;
+    console.warn('Firebase書き込みエラー:', err);
+  }
+}
+
+/* ===========================
    定数
 =========================== */
 const STORAGE_KEY = 'replace_timer_v1';
@@ -628,7 +774,8 @@ function _saveStateNow() {
       showToast('⚠️ 保存容量が上限に達しました');
     }
   }
-
+  // Firebase同期（接続中のみ）
+  pushToFirebase();
 }
 const saveState = debounce(_saveStateNow, 300);
 
@@ -1084,21 +1231,119 @@ function renderMigratePage() {
   const el = document.getElementById('migrate-page-content');
   if (!el) return;
   const count = state.items.length;
-  el.innerHTML = `
-    <div style="padding:0 16px 24px;">
+  const isOnline = fb.status === 'online';
+  const syncCode = fb.syncCode || getSyncCode() || '';
+  const hasCfg   = !!getFbConfig();
+  const statusIcons  = { off:'⚪', connecting:'🟡', online:'🟢', error:'🔴' };
+  const statusLabels = { off:'同期オフ', connecting:'接続中…', online:'リアルタイム同期中', error:'接続エラー' };
 
-      <!-- エクスポート -->
+  el.innerHTML = `
+    <div style="padding:0 16px 32px;">
+
+      <!-- ═══ Firebase リアルタイム同期 ═══ -->
+      <div style="background:linear-gradient(135deg,#eff6ff,#f0f9ff);border:1.5px solid #bfdbfe;border-radius:var(--radius-m);padding:16px;margin-bottom:16px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
+          <p style="font-size:15px;font-weight:800;color:var(--c-primary);">☁️ リアルタイム同期</p>
+          <span id="sync-status-bar" style="font-size:13px;color:${isOnline ? 'var(--c-success)' : 'var(--c-sub)'};">
+            ${statusIcons[fb.status]} ${statusLabels[fb.status]}
+          </span>
+        </div>
+        <p style="font-size:12px;color:#3b82f6;margin-bottom:14px;line-height:1.6;">
+          Firebase（Google）を使って複数の端末でデータを自動同期します。<br>一度設定すれば、アイテムを追加・編集するたびに自動でクラウドへ保存されます。
+        </p>
+
+        ${!hasCfg ? `
+        <!-- 未設定：Firebase設定入力 -->
+        <div style="background:#fff;border-radius:var(--radius-s);padding:14px;margin-bottom:12px;">
+          <p style="font-size:13px;font-weight:700;color:var(--c-text);margin-bottom:8px;">① Firebase設定を入力</p>
+          <p style="font-size:12px;color:var(--c-sub);margin-bottom:10px;line-height:1.6;">
+            <a href="https://console.firebase.google.com/" target="_blank" style="color:var(--c-primary);font-weight:700;">Firebase Console</a> でプロジェクトを作成し、<br>
+            「Realtime Database」を有効にして、<br>
+            「プロジェクトの設定 → マイアプリ → SDK設定」から<br>
+            以下の値をコピーして貼り付けてください。
+          </p>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <input id="fb-api-key"       placeholder="apiKey"           style="width:100%;height:40px;padding:0 10px;border:1px solid var(--c-border);border-radius:var(--radius-s);font-size:13px;background:#f8f9fa;">
+            <input id="fb-project-id"    placeholder="projectId"        style="width:100%;height:40px;padding:0 10px;border:1px solid var(--c-border);border-radius:var(--radius-s);font-size:13px;background:#f8f9fa;">
+            <input id="fb-db-url"        placeholder="databaseURL（https://xxx.firebaseio.com）" style="width:100%;height:40px;padding:0 10px;border:1px solid var(--c-border);border-radius:var(--radius-s);font-size:13px;background:#f8f9fa;">
+            <input id="fb-app-id"        placeholder="appId（省略可）"   style="width:100%;height:40px;padding:0 10px;border:1px solid var(--c-border);border-radius:var(--radius-s);font-size:13px;background:#f8f9fa;">
+          </div>
+        </div>
+
+        <div style="background:#fff;border-radius:var(--radius-s);padding:14px;margin-bottom:12px;">
+          <p style="font-size:13px;font-weight:700;color:var(--c-text);margin-bottom:8px;">② 同期コードを決める</p>
+          <p style="font-size:12px;color:var(--c-sub);margin-bottom:10px;line-height:1.6;">
+            同期したい端末すべてで同じコードを入力してください。<br>英数字で自由に決めてOKです（例：home2024）
+          </p>
+          <input id="fb-sync-code" placeholder="同期コード（例：home2024）" style="width:100%;height:44px;padding:0 12px;border:1.5px solid var(--c-primary);border-radius:var(--radius-s);font-size:15px;font-weight:700;letter-spacing:0.05em;">
+        </div>
+
+        <button id="btn-fb-connect" class="tappable"
+          style="width:100%;height:50px;background:var(--c-primary);color:#fff;border:none;border-radius:var(--radius-s);font-size:15px;font-weight:700;">
+          🔗 同期を開始する
+        </button>
+
+        ` : isOnline ? `
+        <!-- 接続中 -->
+        <div style="background:#fff;border-radius:var(--radius-s);padding:14px;margin-bottom:12px;display:flex;align-items:center;gap:12px;">
+          <div style="font-size:32px;">🟢</div>
+          <div>
+            <div style="font-size:14px;font-weight:700;color:var(--c-success);">同期中</div>
+            <div style="font-size:13px;color:var(--c-sub);">コード：<strong>${escapeHtml(syncCode)}</strong></div>
+            <div style="font-size:12px;color:var(--c-sub);margin-top:2px;">データを変更すると自動でクラウドへ保存されます</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:8px;">
+          <button id="btn-fb-push" class="tappable"
+            style="flex:1;height:44px;background:var(--c-success);color:#fff;border:none;border-radius:var(--radius-s);font-size:14px;font-weight:700;">
+            ⬆️ 今すぐ同期
+          </button>
+          <button id="btn-fb-disconnect" class="tappable"
+            style="flex:1;height:44px;background:var(--c-surface);color:var(--c-danger);border:1.5px solid var(--c-danger);border-radius:var(--radius-s);font-size:14px;font-weight:700;">
+            切断
+          </button>
+        </div>
+
+        ` : `
+        <!-- 設定済み・未接続 -->
+        <div style="background:#fff;border-radius:var(--radius-s);padding:14px;margin-bottom:12px;">
+          <p style="font-size:13px;font-weight:700;color:var(--c-text);margin-bottom:6px;">設定済み</p>
+          <p style="font-size:13px;color:var(--c-sub);">前回の同期コード：<strong>${escapeHtml(getSyncCode() || '（なし）')}</strong></p>
+          <input id="fb-sync-code-reconnect" placeholder="同期コード" value="${escapeHtml(getSyncCode() || '')}"
+            style="width:100%;height:44px;padding:0 12px;border:1.5px solid var(--c-primary);border-radius:var(--radius-s);font-size:15px;font-weight:700;margin-top:10px;letter-spacing:0.05em;">
+        </div>
+        <div style="display:flex;gap:8px;">
+          <button id="btn-fb-reconnect" class="tappable"
+            style="flex:1;height:50px;background:var(--c-primary);color:#fff;border:none;border-radius:var(--radius-s);font-size:15px;font-weight:700;">
+            🔗 再接続
+          </button>
+          <button id="btn-fb-reset-cfg" class="tappable"
+            style="width:80px;height:50px;background:var(--c-surface);color:var(--c-danger);border:1.5px solid var(--c-danger);border-radius:var(--radius-s);font-size:13px;font-weight:700;">
+            設定削除
+          </button>
+        </div>
+        `}
+
+        <div style="margin-top:12px;padding:10px;background:rgba(59,130,246,0.07);border-radius:var(--radius-s);">
+          <p style="font-size:11px;color:#6b7280;line-height:1.7;">
+            🔒 同期コードを知っている端末だけが同期されます。<br>
+            Firebase無料枠（Sparkプラン）：同時接続100・1GB・月10GBで十分余裕があります。
+          </p>
+        </div>
+      </div>
+
+      <!-- ═══ 手動エクスポート・インポート ═══ -->
       <div style="background:var(--c-bg);border:1px solid var(--c-border);border-radius:var(--radius-m);padding:16px;box-shadow:var(--shadow-card);margin-bottom:16px;">
-        <p style="font-size:14px;font-weight:700;color:var(--c-text);margin-bottom:6px;">📤 このデバイスからエクスポート</p>
-        <p style="font-size:13px;color:var(--c-sub);margin-bottom:12px;line-height:1.6;">現在の${count}件のデータをテキストとして表示します。そのテキストを別のデバイスでインポートしてください。</p>
+        <p style="font-size:14px;font-weight:700;color:var(--c-text);margin-bottom:6px;">📤 手動エクスポート</p>
+        <p style="font-size:13px;color:var(--c-sub);margin-bottom:12px;line-height:1.6;">現在の${count}件をテキストとして書き出します（バックアップ用）。</p>
         <button class="tappable" id="btn-export"
           style="width:100%;height:48px;background:var(--c-primary);color:#fff;border:none;border-radius:var(--radius-s);font-size:15px;font-weight:700;">
           データをエクスポート
         </button>
         <div id="export-area" style="display:none;margin-top:12px;">
-          <p style="font-size:12px;color:var(--c-sub);margin-bottom:6px;">↓ このテキスト全体を長押しで選択してコピーしてください</p>
+          <p style="font-size:12px;color:var(--c-sub);margin-bottom:6px;">↓ このテキスト全体を長押しで選択してコピー</p>
           <textarea id="export-text" readonly
-            style="width:100%;height:120px;padding:10px;border:1.5px solid var(--c-primary);border-radius:var(--radius-s);font-size:11px;font-family:monospace;resize:none;background:var(--c-surface);color:var(--c-text);box-sizing:border-box;"></textarea>
+            style="width:100%;height:100px;padding:10px;border:1.5px solid var(--c-primary);border-radius:var(--radius-s);font-size:11px;font-family:monospace;resize:none;background:var(--c-surface);color:var(--c-text);box-sizing:border-box;"></textarea>
           <button class="tappable" id="btn-copy-export"
             style="width:100%;height:44px;margin-top:8px;background:var(--c-surface);color:var(--c-text);border:1.5px solid var(--c-border);border-radius:var(--radius-s);font-size:14px;font-weight:600;">
             📋 テキストをコピー
@@ -1106,12 +1351,11 @@ function renderMigratePage() {
         </div>
       </div>
 
-      <!-- インポート -->
       <div style="background:var(--c-bg);border:1px solid var(--c-border);border-radius:var(--radius-m);padding:16px;box-shadow:var(--shadow-card);">
-        <p style="font-size:14px;font-weight:700;color:var(--c-text);margin-bottom:6px;">📥 別のデバイスからインポート</p>
+        <p style="font-size:14px;font-weight:700;color:var(--c-text);margin-bottom:6px;">📥 手動インポート</p>
         <p style="font-size:13px;color:var(--c-sub);margin-bottom:12px;line-height:1.6;">エクスポートしたテキストを貼り付けて読み込みます。現在のデータは上書きされます。</p>
         <textarea id="import-text" placeholder="エクスポートしたテキストをここに貼り付け"
-          style="width:100%;height:120px;padding:10px;border:1.5px solid var(--c-border);border-radius:var(--radius-s);font-size:11px;font-family:monospace;resize:none;background:var(--c-bg);color:var(--c-text);box-sizing:border-box;outline:none;"></textarea>
+          style="width:100%;height:100px;padding:10px;border:1.5px solid var(--c-border);border-radius:var(--radius-s);font-size:11px;font-family:monospace;resize:none;background:var(--c-bg);color:var(--c-text);box-sizing:border-box;outline:none;"></textarea>
         <button class="tappable" id="btn-import"
           style="width:100%;height:48px;margin-top:10px;background:var(--c-success);color:#fff;border:none;border-radius:var(--radius-s);font-size:15px;font-weight:700;">
           データを読み込む
@@ -1121,7 +1365,57 @@ function renderMigratePage() {
     </div>
   `;
 
-  // エクスポートボタン
+  // ── Firebase 接続ボタン ──
+  document.getElementById('btn-fb-connect')?.addEventListener('click', async () => {
+    const apiKey    = document.getElementById('fb-api-key')?.value.trim();
+    const projectId = document.getElementById('fb-project-id')?.value.trim();
+    const dbURL     = document.getElementById('fb-db-url')?.value.trim();
+    const appId     = document.getElementById('fb-app-id')?.value.trim() || 'replace-timer';
+    const code      = document.getElementById('fb-sync-code')?.value.trim();
+    if (!apiKey || !projectId || !dbURL || !code) {
+      showToast('⚠️ 必須項目（apiKey / projectId / databaseURL / 同期コード）を入力してください');
+      return;
+    }
+    const cfg = { apiKey, authDomain: `${projectId}.firebaseapp.com`, databaseURL: dbURL, projectId, appId };
+    await connectFirebase(cfg, code);
+    // 接続後はすぐに今のデータをアップロード
+    pushToFirebase();
+  });
+
+  // 再接続
+  document.getElementById('btn-fb-reconnect')?.addEventListener('click', async () => {
+    const cfg  = getFbConfig();
+    const code = document.getElementById('fb-sync-code-reconnect')?.value.trim() || getSyncCode();
+    if (!cfg || !code) { showToast('⚠️ 同期コードを入力してください'); return; }
+    await connectFirebase(cfg, code);
+  });
+
+  // 今すぐ同期
+  document.getElementById('btn-fb-push')?.addEventListener('click', async () => {
+    fb.ignoreNext = false;
+    await pushToFirebase();
+    showToast('⬆️ クラウドへ同期しました');
+    haptic();
+  });
+
+  // 切断
+  document.getElementById('btn-fb-disconnect')?.addEventListener('click', () => {
+    showConfirm('同期を停止しますか？', 'データはこの端末に残ります').then(ok => {
+      if (ok) disconnectFirebase();
+    });
+  });
+
+  // 設定削除
+  document.getElementById('btn-fb-reset-cfg')?.addEventListener('click', () => {
+    showConfirm('Firebase設定を削除しますか？', '同期が停止されます。再度使うには設定が必要です').then(ok => {
+      if (!ok) return;
+      disconnectFirebase();
+      try { localStorage.removeItem(FIREBASE_CFG_KEY); } catch {}
+      renderMigratePage();
+    });
+  });
+
+  // エクスポート
   document.getElementById('btn-export').addEventListener('click', () => {
     const raw = localStorage.getItem(STORAGE_KEY) || JSON.stringify(state);
     document.getElementById('export-text').value = raw;
@@ -1129,24 +1423,20 @@ function renderMigratePage() {
     haptic();
   });
 
-  // コピーボタン
   document.getElementById('btn-copy-export').addEventListener('click', () => {
     const text = document.getElementById('export-text').value;
     if (navigator.clipboard) {
       navigator.clipboard.writeText(text)
-        .then(() => { showToast('📋 コピーしました！別のデバイスで貼り付けてください'); haptic(); })
-        .catch(() => { showToast('⚠️ コピーできませんでした。テキストを長押しで選択してください'); });
+        .then(() => { showToast('📋 コピーしました！'); haptic(); })
+        .catch(() => { showToast('⚠️ 長押しで選択してコピーしてください'); });
     } else {
-      // clipboard API非対応時はフォールバック
-      const ta = document.getElementById('export-text');
-      ta.select();
+      document.getElementById('export-text').select();
       document.execCommand('copy');
       showToast('📋 コピーしました！');
-      haptic();
     }
   });
 
-  // インポートボタン
+  // インポート
   document.getElementById('btn-import').addEventListener('click', () => {
     const text = document.getElementById('import-text').value.trim();
     if (!text) { showToast('⚠️ テキストを貼り付けてください'); return; }
@@ -1798,6 +2088,13 @@ function init() {
 
   // 起動時にアプリ内通知チェック（少し遅らせて描画完了後に表示）
   setTimeout(checkAndNotify, 800);
+
+  // Firebase設定が保存済みなら自動再接続
+  const savedCfg  = getFbConfig();
+  const savedCode = getSyncCode();
+  if (savedCfg && savedCode) {
+    setTimeout(() => connectFirebase(savedCfg, savedCode), 1200);
+  }
 }
 
 /** カードクリック委譲ハンドラ */
