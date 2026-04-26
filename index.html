@@ -1,0 +1,1784 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#3B82F6">
+<title>買い替えタイマー</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iYmciIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjojM0I4MkY2Ii8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6IzFENEVEOCIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0ic2hpbmUiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3R5bGU9InN0b3AtY29sb3I6I2ZmZmZmZjtzdG9wLW9wYWNpdHk6MC4xNSIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiNmZmZmZmY7c3RvcC1vcGFjaXR5OjAiLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgPC9kZWZzPgoKICA8cmVjdCB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgcng9IjExMCIgZmlsbD0idXJsKCNiZykiLz4KICA8cmVjdCB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgcng9IjExMCIgZmlsbD0idXJsKCNzaGluZSkiLz4KICA8Y2lyY2xlIGN4PSIyNTYiIGN5PSIyNDAiIHI9IjE2OCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIyMiIgb3BhY2l0eT0iMC45NSIvPgogIDxjaXJjbGUgY3g9IjI1NiIgY3k9IjI0MCIgcj0iMTQ1IiBmaWxsPSJ3aGl0ZSIgb3BhY2l0eT0iMC4xMiIvPgogIDxyZWN0IHg9IjI0OCIgeT0iODgiIHdpZHRoPSIxNiIgaGVpZ2h0PSIzMiIgcng9IjgiIGZpbGw9IndoaXRlIiBvcGFjaXR5PSIwLjkiLz4KICA8cmVjdCB4PSIyNDgiIHk9IjM2MCIgd2lkdGg9IjE2IiBoZWlnaHQ9IjMyIiByeD0iOCIgZmlsbD0id2hpdGUiIG9wYWNpdHk9IjAuOSIvPgogIDxyZWN0IHg9Ijg4IiB5PSIyMzIiIHdpZHRoPSIzMiIgaGVpZ2h0PSIxNiIgcng9IjgiIGZpbGw9IndoaXRlIiBvcGFjaXR5PSIwLjkiLz4KICA8cmVjdCB4PSIzNjAiIHk9IjIzMiIgd2lkdGg9IjMyIiBoZWlnaHQ9IjE2IiByeD0iOCIgZmlsbD0id2hpdGUiIG9wYWNpdHk9IjAuOSIvPgogIDxsaW5lIHgxPSIyNTYiIHkxPSIyNDAiIHgyPSIxOTQiIHkyPSIxNTYiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMjAiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgb3BhY2l0eT0iMC45NSIvPgogIDxsaW5lIHgxPSIyNTYiIHkxPSIyNDAiIHgyPSIzMjQiIHkyPSIxNDgiIHN0cm9rZT0iI0ZDRDM0RCIgc3Ryb2tlLXdpZHRoPSIxNiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CiAgPGNpcmNsZSBjeD0iMjU2IiBjeT0iMjQwIiByPSIxOCIgZmlsbD0id2hpdGUiLz4KICA8Y2lyY2xlIGN4PSIyNTYiIGN5PSIyNDAiIHI9IjEwIiBmaWxsPSIjMUQ0RUQ4Ii8+CiAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMjk2LCAzMjgpIj4KICAgIDxjaXJjbGUgY3g9IjcyIiBjeT0iNzIiIHI9IjcyIiBmaWxsPSIjRkNEMzREIi8+CiAgICA8cGF0aCBkPSJNMjggMzYgTDM2IDM2IEw1MiA4OCBMMTAwIDg4IEwxMTIgNTIgTDQ0IDUyIiBmaWxsPSJub25lIiBzdHJva2U9IiMxRDRFRDgiIHN0cm9rZS13aWR0aD0iOSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CiAgICA8Y2lyY2xlIGN4PSI1NiIgY3k9IjEwMiIgcj0iMTAiIGZpbGw9IiMxRDRFRDgiLz4KICAgIDxjaXJjbGUgY3g9Ijk2IiBjeT0iMTAyIiByPSIxMCIgZmlsbD0iIzFENEVEOCIvPgogIDwvZz4KPC9zdmc+">
+<link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iYmciIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjojM0I4MkY2Ii8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6IzFENEVEOCIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0ic2hpbmUiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3R5bGU9InN0b3AtY29sb3I6I2ZmZmZmZjtzdG9wLW9wYWNpdHk6MC4xNSIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiNmZmZmZmY7c3RvcC1vcGFjaXR5OjAiLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgPC9kZWZzPgoKICA8cmVjdCB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgcng9IjExMCIgZmlsbD0idXJsKCNiZykiLz4KICA8cmVjdCB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgcng9IjExMCIgZmlsbD0idXJsKCNzaGluZSkiLz4KICA8Y2lyY2xlIGN4PSIyNTYiIGN5PSIyNDAiIHI9IjE2OCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIyMiIgb3BhY2l0eT0iMC45NSIvPgogIDxjaXJjbGUgY3g9IjI1NiIgY3k9IjI0MCIgcj0iMTQ1IiBmaWxsPSJ3aGl0ZSIgb3BhY2l0eT0iMC4xMiIvPgogIDxyZWN0IHg9IjI0OCIgeT0iODgiIHdpZHRoPSIxNiIgaGVpZ2h0PSIzMiIgcng9IjgiIGZpbGw9IndoaXRlIiBvcGFjaXR5PSIwLjkiLz4KICA8cmVjdCB4PSIyNDgiIHk9IjM2MCIgd2lkdGg9IjE2IiBoZWlnaHQ9IjMyIiByeD0iOCIgZmlsbD0id2hpdGUiIG9wYWNpdHk9IjAuOSIvPgogIDxyZWN0IHg9Ijg4IiB5PSIyMzIiIHdpZHRoPSIzMiIgaGVpZ2h0PSIxNiIgcng9IjgiIGZpbGw9IndoaXRlIiBvcGFjaXR5PSIwLjkiLz4KICA8cmVjdCB4PSIzNjAiIHk9IjIzMiIgd2lkdGg9IjMyIiBoZWlnaHQ9IjE2IiByeD0iOCIgZmlsbD0id2hpdGUiIG9wYWNpdHk9IjAuOSIvPgogIDxsaW5lIHgxPSIyNTYiIHkxPSIyNDAiIHgyPSIxOTQiIHkyPSIxNTYiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMjAiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgb3BhY2l0eT0iMC45NSIvPgogIDxsaW5lIHgxPSIyNTYiIHkxPSIyNDAiIHgyPSIzMjQiIHkyPSIxNDgiIHN0cm9rZT0iI0ZDRDM0RCIgc3Ryb2tlLXdpZHRoPSIxNiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CiAgPGNpcmNsZSBjeD0iMjU2IiBjeT0iMjQwIiByPSIxOCIgZmlsbD0id2hpdGUiLz4KICA8Y2lyY2xlIGN4PSIyNTYiIGN5PSIyNDAiIHI9IjEwIiBmaWxsPSIjMUQ0RUQ4Ii8+CiAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMjk2LCAzMjgpIj4KICAgIDxjaXJjbGUgY3g9IjcyIiBjeT0iNzIiIHI9IjcyIiBmaWxsPSIjRkNEMzREIi8+CiAgICA8cGF0aCBkPSJNMjggMzYgTDM2IDM2IEw1MiA4OCBMMTAwIDg4IEwxMTIgNTIgTDQ0IDUyIiBmaWxsPSJub25lIiBzdHJva2U9IiMxRDRFRDgiIHN0cm9rZS13aWR0aD0iOSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CiAgICA8Y2lyY2xlIGN4PSI1NiIgY3k9IjEwMiIgcj0iMTAiIGZpbGw9IiMxRDRFRDgiLz4KICAgIDxjaXJjbGUgY3g9Ijk2IiBjeT0iMTAyIiByPSIxMCIgZmlsbD0iIzFENEVEOCIvPgogIDwvZz4KPC9zdmc+">
+<style>
+/* ===== CSS変数 ===== */
+:root {
+  --c-bg: #ffffff;
+  --c-surface: #f8f9fa;
+  --c-border: #eeeeee;
+  --c-text: #1a1a1a;
+  --c-sub: #888888;
+  --c-primary: #3B82F6;
+  --c-primary-light: #eff6ff;
+  --c-danger: #ef4444;
+  --c-warning: #f59e0b;
+  --c-success: #22c55e;
+  --c-muted: #9ca3af;
+  --radius-s: 8px;
+  --radius-m: 12px;
+  --radius-l: 20px;
+  --shadow-card: 0 1px 4px rgba(0,0,0,0.07);
+  --shadow-modal: 0 -4px 24px rgba(0,0,0,0.10);
+  --transition: 0.18s ease;
+  --z-header: 100;
+  --z-fab: 90;
+  --z-nav: 100;
+  --z-modal: 200;
+  --z-toast: 300;
+  --z-confirm: 250;
+  --z-menu: 210;
+}
+
+/* ===== リセット ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Noto Sans JP', -apple-system, 'Hiragino Sans', sans-serif;
+  background: var(--c-bg); color: var(--c-text);
+  font-size: 16px; line-height: 1.6;
+  -webkit-text-size-adjust: 100%; overscroll-behavior: none;
+}
+#app {
+  max-width: 430px; margin: 0 auto;
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
+  min-height: 100dvh;
+  display: flex; flex-direction: column;
+}
+button { font-family: inherit; cursor: pointer; touch-action: manipulation; }
+input, textarea, select { font-family: inherit; font-size: 16px; }
+a { color: inherit; text-decoration: none; }
+
+/* ===== タップフィードバック ===== */
+.tappable {
+  transition: transform var(--transition), opacity var(--transition);
+  -webkit-tap-highlight-color: transparent;
+}
+.tappable:active { transform: scale(0.97); opacity: 0.85; }
+
+/* ===== ボトムナビ ===== */
+.nav-btn { color: var(--c-sub); transition: color var(--transition); }
+.nav-btn.active { color: var(--c-primary); }
+.nav-btn.active .nav-icon { transform: translateY(-2px); }
+.nav-icon { display:block; transition: transform var(--transition); }
+
+/* ===== アニメーション ===== */
+@keyframes slideUp   { from { transform: translateY(100%); }              to { transform: translateY(0); } }
+@keyframes slideDown { from { transform: translateX(-50%) translateY(-12px); opacity:0; } to { transform: translateX(-50%) translateY(0); opacity:1; } }
+@keyframes fadeIn    { from { opacity: 0; }  to { opacity: 1; } }
+@keyframes fadeOut   { from { opacity: 1; }  to { opacity: 0; } }
+@keyframes shimmer   { to { background-position: -200% 0; } }
+
+/* ===== アイテムカード（新デザイン） ===== */
+.item-card {
+  background: var(--c-bg);
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius-m);
+  padding: 14px 16px;
+  margin: 0 16px 8px;
+  box-shadow: var(--shadow-card);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  position: relative;
+  overflow: hidden;
+  min-height: 64px;
+}
+.item-card::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 4px;
+  background: var(--c-success);
+  border-radius: 4px 0 0 4px;
+}
+.item-card.status-over::before  { background: var(--c-danger); }
+.item-card.status-soon::before  { background: var(--c-warning); }
+.item-card.status-ok::before    { background: var(--c-success); }
+
+/* 左側：日付ブロック */
+.card-date-block {
+  flex-shrink: 0;
+  width: 60px;
+  text-align: center;
+  padding: 6px 0;
+}
+.card-date-month {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--c-sub);
+  letter-spacing: 0.02em;
+}
+.card-date-day {
+  font-size: 28px;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--c-text);
+}
+.card-date-label {
+  font-size: 10px;
+  font-weight: 600;
+  margin-top: 2px;
+  padding: 2px 6px;
+  border-radius: 10px;
+  display: inline-block;
+}
+.status-over  .card-date-day   { color: var(--c-danger); }
+.status-soon  .card-date-day   { color: var(--c-warning); }
+.status-ok    .card-date-day   { color: var(--c-text); }
+.label-over   { background: #fee2e2; color: #b91c1c; }
+.label-soon   { background: #fef9c3; color: #b45309; }
+.label-ok     { background: #dcfce7; color: #15803d; }
+
+/* 右側：情報ブロック */
+.card-info { flex: 1; min-width: 0; }
+.card-name {
+  font-size: 15px;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 2px;
+  color: var(--c-text);
+}
+.card-meta {
+  font-size: 12px;
+  color: var(--c-sub);
+}
+.card-cat-icon {
+  font-size: 22px;
+  flex-shrink: 0;
+}
+
+/* ===== セグメント ===== */
+.segment {
+  display: flex;
+  background: var(--c-surface);
+  border-radius: var(--radius-s);
+  padding: 3px;
+  margin: 0 16px 12px;
+}
+.seg-btn {
+  flex: 1; height: 32px; border: none;
+  border-radius: calc(var(--radius-s) - 2px);
+  font-size: 12px; font-weight: 600;
+  background: transparent; color: var(--c-sub);
+  transition: background var(--transition), color var(--transition);
+}
+.seg-btn.active {
+  background: var(--c-bg); color: var(--c-text);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+
+/* ===== フォーム ===== */
+.form-label {
+  display: block; font-size: 13px; font-weight: 600;
+  color: var(--c-sub); margin-bottom: 6px;
+}
+.form-input {
+  width: 100%; height: 48px; padding: 0 12px;
+  border: 1.5px solid var(--c-border); border-radius: var(--radius-s);
+  background: var(--c-bg); font-size: 16px; color: var(--c-text);
+  outline: none; transition: border-color var(--transition);
+}
+.form-input:focus { border-color: var(--c-primary); }
+.form-select {
+  width: 100%; height: 48px; padding: 0 12px;
+  border: 1.5px solid var(--c-border); border-radius: var(--radius-s);
+  background: var(--c-bg); font-size: 16px; color: var(--c-text);
+  outline: none; appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 12px center;
+  transition: border-color var(--transition);
+}
+.form-select:focus { border-color: var(--c-primary); }
+.form-group { margin-bottom: 16px; }
+.ferr { font-size: 12px; color: var(--c-danger); margin-top: 4px; }
+
+/* ===== Empty State ===== */
+.empty-state {
+  text-align: center; padding: 64px 24px; color: var(--c-sub);
+}
+
+/* ===== トースト ===== */
+#toast {
+  position: fixed;
+  bottom: calc(64px + env(safe-area-inset-bottom) + 12px);
+  left: 50%; transform: translateX(-50%);
+  background: #1a1a1a; color: #fff;
+  padding: 10px 20px; border-radius: 24px;
+  font-size: 14px; font-weight: 500;
+  white-space: nowrap; pointer-events: none;
+  z-index: var(--z-toast); opacity: 0;
+  max-width: calc(100% - 32px);
+}
+
+/* ===== ヘッダーメニュー ===== */
+#header-menu {
+  position: fixed;
+  top: 56px; right: calc(50% - 215px);
+  background: var(--c-bg);
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius-m);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  z-index: var(--z-menu);
+  min-width: 160px;
+  overflow: hidden;
+  animation: fadeIn 0.15s ease;
+}
+.menu-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 14px 16px;
+  font-size: 15px; color: var(--c-text);
+  background: none; border: none;
+  width: 100%; text-align: left;
+  border-bottom: 1px solid var(--c-border);
+  cursor: pointer;
+}
+.menu-item:last-child { border-bottom: none; }
+.menu-item:active { background: var(--c-surface); }
+</style>
+</head>
+<body>
+<div id="app">
+
+  <!-- ===== ヘッダー ===== -->
+  <header style="position:sticky;top:0;z-index:var(--z-header);background:rgba(255,255,255,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--c-border);padding:0 16px;height:56px;display:flex;align-items:center;justify-content:space-between;">
+    <h1 style="font-size:18px;font-weight:700;" id="header-title">買い替えタイマー</h1>
+    <div style="display:flex;align-items:center;gap:8px;">
+      <button class="tappable" id="header-action" onclick="openAddModal()" aria-label="アイテムを追加" style="width:36px;height:36px;border-radius:50%;background:var(--c-primary);border:none;font-size:22px;display:flex;align-items:center;justify-content:center;color:#fff;box-shadow:0 2px 8px rgba(59,130,246,0.35);">＋</button>
+      <button class="tappable" id="header-menu-btn" onclick="toggleHeaderMenu()" aria-label="メニュー" style="width:36px;height:36px;border-radius:50%;background:var(--c-surface);border:none;font-size:18px;display:flex;align-items:center;justify-content:center;color:var(--c-text);">⋯</button>
+    </div>
+  </header>
+
+  <!-- ===== ヘッダーメニュー ===== -->
+  <div id="header-menu" style="display:none;">
+    <button class="menu-item tappable" onclick="showPage('ref');closeHeaderMenu()">📖 耐用年数の目安</button>
+    <button class="menu-item tappable" onclick="showPage('migrate');closeHeaderMenu()">📤 データ移行</button>
+  </div>
+  <div id="header-menu-overlay" onclick="closeHeaderMenu()" style="display:none;position:fixed;inset:0;z-index:calc(var(--z-menu) - 1);"></div>
+
+  <!-- ===== メインコンテンツ ===== -->
+  <main style="flex:1;overflow-y:auto;padding-bottom:calc(64px + env(safe-area-inset-bottom));">
+
+    <!-- ホームページ -->
+    <div id="page-home" class="page" style="padding-top:12px;">
+      <div id="home-summary"></div>
+      <div id="home-alert-list"></div>
+    </div>
+
+    <!-- リストページ -->
+    <div id="page-list" class="page" style="display:none;padding-top:12px;">
+      <div style="margin:0 16px 10px;">
+        <input id="search-input" class="form-input" type="search" placeholder="🔍 アイテムを検索…" oninput="renderList()" aria-label="検索" inputmode="search">
+      </div>
+      <div class="segment" role="tablist">
+        <button class="seg-btn tappable active" data-filter="all"  onclick="setFilter('all',this)"  role="tab" aria-selected="true">すべて</button>
+        <button class="seg-btn tappable"        data-filter="over" onclick="setFilter('over',this)" role="tab" aria-selected="false">要交換</button>
+        <button class="seg-btn tappable"        data-filter="soon" onclick="setFilter('soon',this)" role="tab" aria-selected="false">まもなく</button>
+        <button class="seg-btn tappable"        data-filter="ok"   onclick="setFilter('ok',this)"   role="tab" aria-selected="false">良好</button>
+      </div>
+      <div id="item-list"></div>
+    </div>
+
+    <!-- 買ってOKページ -->
+    <div id="page-buy" class="page" style="display:none;padding-top:12px;">
+      <div id="buy-page-content"></div>
+    </div>
+
+    <!-- 参考ページ -->
+    <div id="page-ref" class="page" style="display:none;padding-top:12px;">
+      <div style="padding:0 16px 12px;">
+        <p style="font-size:14px;color:var(--c-sub);line-height:1.7;">各アイテムの一般的な耐用年数の目安です。メーカー推奨・使用状況によって異なります。</p>
+      </div>
+      <div id="ref-list"></div>
+    </div>
+
+
+
+    <!-- データ移行ページ -->
+    <div id="page-migrate" class="page" style="display:none;padding-top:12px;">
+      <div id="migrate-page-content"></div>
+    </div>
+
+  </main>
+
+  <!-- ===== ボトムナビ（3タブ） ===== -->
+  <nav style="position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;background:rgba(255,255,255,0.95);backdrop-filter:blur(12px);border-top:1px solid var(--c-border);display:flex;padding-bottom:env(safe-area-inset-bottom);z-index:var(--z-nav);">
+    <button class="nav-btn tappable active" data-page="home" onclick="showPage('home')" style="flex:1;height:56px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;background:none;border:none;font-size:11px;font-weight:600;">
+      <span class="nav-icon" style="font-size:22px;position:relative;">🏠
+        <span id="badge-home" style="display:none;position:absolute;top:-4px;right:-10px;min-width:18px;height:18px;background:var(--c-danger);color:#fff;border-radius:9px;font-size:11px;font-weight:700;padding:0 4px;line-height:18px;text-align:center;border:2px solid var(--c-bg);"></span>
+      </span>
+      <span>ホーム</span>
+    </button>
+    <button class="nav-btn tappable" data-page="list" onclick="showPage('list')" style="flex:1;height:56px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;background:none;border:none;font-size:11px;font-weight:600;">
+      <span class="nav-icon" style="font-size:22px;position:relative;">📋
+        <span id="badge-list" style="display:none;position:absolute;top:-4px;right:-10px;min-width:18px;height:18px;background:var(--c-danger);color:#fff;border-radius:9px;font-size:11px;font-weight:700;padding:0 4px;line-height:18px;text-align:center;border:2px solid var(--c-bg);"></span>
+      </span>
+      <span>アイテム</span>
+    </button>
+    <button class="nav-btn tappable" data-page="buy" onclick="showPage('buy')" style="flex:1;height:56px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;background:none;border:none;font-size:11px;font-weight:600;">
+      <span class="nav-icon" style="font-size:22px;position:relative;">🛒
+        <span id="badge-buy" style="display:none;position:absolute;top:-4px;right:-10px;min-width:18px;height:18px;background:var(--c-danger);color:#fff;border-radius:9px;font-size:11px;font-weight:700;padding:0 4px;line-height:18px;text-align:center;border:2px solid var(--c-bg);"></span>
+      </span>
+      <span>買ってOK</span>
+    </button>
+  </nav>
+</div>
+
+<!-- ===== 追加/編集モーダル ===== -->
+<div id="modal" style="display:none;position:fixed;inset:0;z-index:var(--z-modal);align-items:flex-end;justify-content:center;">
+  <div onclick="closeModal()" style="position:absolute;inset:0;background:rgba(0,0,0,0.45);animation:fadeIn 0.2s ease;"></div>
+  <div style="position:relative;width:100%;max-width:430px;background:var(--c-bg);border-radius:var(--radius-l) var(--radius-l) 0 0;padding:24px 16px calc(24px + env(safe-area-inset-bottom));max-height:88dvh;overflow-y:auto;box-shadow:var(--shadow-modal);animation:slideUp 0.25s ease;">
+    <div style="width:36px;height:4px;background:#ddd;border-radius:2px;margin:0 auto 20px;"></div>
+    <h2 id="modal-title" style="font-size:18px;font-weight:700;margin-bottom:20px;">アイテムを追加</h2>
+
+    <div class="form-group">
+      <label class="form-label" for="input-name">アイテム名 <span style="color:var(--c-danger);">*</span></label>
+      <input id="input-name" class="form-input" type="text" placeholder="例：洗濯機、冬コート…" maxlength="50" required>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="input-category">カテゴリ</label>
+      <select id="input-category" class="form-select" onchange="onCategoryChange()">
+        <option value="">選択してください</option>
+        <option value="home_appliance">家電・電子機器</option>
+        <option value="clothing">衣類・ファッション</option>
+        <option value="vehicle">車・自転車</option>
+        <option value="daily">日用品・消耗品</option>
+        <option value="furniture">家具・インテリア</option>
+        <option value="food">食品・飲料</option>
+        <option value="health">健康・美容</option>
+        <option value="other">その他</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="input-subcat">種類（任意）</label>
+      <select id="input-subcat" class="form-select" onchange="onSubcatChange()">
+        <option value="">先にカテゴリを選択</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="input-date">購入日 <span style="color:var(--c-danger);">*</span></label>
+      <input id="input-date" class="form-input" type="date" required>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="input-years">買い替え目安（年）<span style="color:var(--c-danger);">*</span></label>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <input id="input-years" class="form-input" type="number" min="0.1" max="50" step="0.5" placeholder="例: 5" style="flex:1;" inputmode="decimal" required>
+        <span style="font-size:14px;color:var(--c-sub);white-space:nowrap;">年後に交換</span>
+      </div>
+      <p id="years-hint" style="font-size:12px;color:var(--c-primary);margin-top:4px;"></p>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="input-memo">メモ（任意）</label>
+      <input id="input-memo" class="form-input" type="text" placeholder="型番・購入場所など" maxlength="100">
+    </div>
+
+    <!-- 使用ペース設定（消耗品向け） -->
+    <div id="pace-section" style="display:none;margin-bottom:16px;background:var(--c-surface);border-radius:var(--radius-m);padding:14px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+        <p style="font-size:13px;font-weight:700;color:var(--c-text);">📊 使用ペースから計算</p>
+        <button type="button" class="tappable" id="btn-pace-analyze" style="height:28px;padding:0 10px;border:1.5px solid var(--c-primary);border-radius:14px;background:transparent;font-size:12px;font-weight:600;color:var(--c-primary);">AIで解析</button>
+      </div>
+      <div id="pace-fields" style="display:none;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap;">
+          <span style="font-size:14px;color:var(--c-text);">総量</span>
+          <input id="input-pace-total" type="number" min="1" max="9999" step="1" class="form-input" style="width:80px;height:36px;padding:0 8px;" placeholder="20" inputmode="decimal">
+          <select id="input-pace-unit" class="form-select" style="width:80px;height:36px;padding:0 8px;" onchange="document.getElementById('input-pace-unit2').value=this.value">
+            <option value="枚">枚</option>
+            <option value="ml">ml</option>
+            <option value="g">g</option>
+            <option value="個">個</option>
+            <option value="回">回</option>
+          </select>
+          <span style="font-size:14px;color:var(--c-text);">を</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap;">
+          <span style="font-size:14px;color:var(--c-text);">1日に</span>
+          <input id="input-pace-per-day" type="number" min="0.1" max="99" step="0.5" class="form-input" style="width:70px;height:36px;padding:0 8px;" placeholder="1" inputmode="decimal">
+          <select id="input-pace-unit2" class="form-select" style="width:80px;height:36px;padding:0 8px;">
+            <option value="枚">枚</option>
+            <option value="ml">ml</option>
+            <option value="g">g</option>
+            <option value="個">個</option>
+            <option value="回">回</option>
+          </select>
+          <span style="font-size:14px;color:var(--c-text);">使用</span>
+        </div>
+        <div style="background:var(--c-primary-light);border-radius:var(--radius-s);padding:10px;display:flex;align-items:center;justify-content:space-between;">
+          <span style="font-size:13px;color:var(--c-primary);">計算結果</span>
+          <span id="pace-result" style="font-size:15px;font-weight:700;color:var(--c-primary);">—</span>
+        </div>
+        <button type="button" class="tappable" id="btn-pace-apply" style="width:100%;height:38px;background:var(--c-primary);color:#fff;border:none;border-radius:var(--radius-s);font-size:14px;font-weight:600;margin-top:8px;">この値を反映する</button>
+      </div>
+      <p id="pace-ai-hint" style="font-size:12px;color:var(--c-sub);margin-top:4px;">「AIで解析」をタップすると商品名から自動入力します</p>
+    </div>
+
+    <button id="modal-save-btn" class="tappable" onclick="saveItem()" style="width:100%;height:52px;background:var(--c-primary);color:#fff;border:none;border-radius:var(--radius-s);font-size:16px;font-weight:700;margin-top:8px;">保存する</button>
+  </div>
+</div>
+
+<!-- ===== 確認ダイアログ ===== -->
+<div id="confirm-dialog" style="display:none;position:fixed;inset:0;z-index:var(--z-confirm);align-items:center;justify-content:center;padding:16px;">
+  <div onclick="closeConfirm(false)" style="position:absolute;inset:0;background:rgba(0,0,0,0.45);"></div>
+  <div style="position:relative;width:100%;max-width:320px;background:var(--c-bg);border-radius:var(--radius-m);padding:24px;box-shadow:0 8px 32px rgba(0,0,0,0.15);animation:fadeIn 0.18s ease;">
+    <p id="confirm-msg" style="font-size:16px;font-weight:600;margin-bottom:8px;"></p>
+    <p id="confirm-sub" style="font-size:14px;color:var(--c-sub);margin-bottom:20px;"></p>
+    <div style="display:flex;gap:8px;">
+      <button class="tappable" onclick="closeConfirm(false)" style="flex:1;height:44px;border:1.5px solid var(--c-border);border-radius:var(--radius-s);background:transparent;font-size:15px;font-weight:600;color:var(--c-sub);">キャンセル</button>
+      <button class="tappable" id="confirm-ok-btn" onclick="closeConfirm(true)" style="flex:1;height:44px;border:none;border-radius:var(--radius-s);background:var(--c-danger);color:#fff;font-size:15px;font-weight:700;">実行する</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== トースト ===== -->
+<div id="toast" role="status" aria-live="polite"></div>
+
+<!-- ===== アプリ内通知バナー ===== -->
+<div id="notify-banner" role="alert" aria-live="assertive" style="
+  display:none;
+  position:fixed;
+  top:calc(56px + 8px);
+  left:50%;transform:translateX(-50%);
+  width:calc(100% - 32px);
+  max-width:398px;
+  background:#1a1a1a;
+  color:#fff;
+  border-radius:var(--radius-m);
+  padding:14px 16px;
+  box-shadow:0 4px 20px rgba(0,0,0,0.25);
+  z-index:var(--z-toast);
+  cursor:pointer;
+  animation:slideDown 0.3s ease;
+">
+  <div style="display:flex;align-items:center;gap:10px;">
+    <span id="notify-icon" style="font-size:22px;flex-shrink:0;"></span>
+    <div style="flex:1;min-width:0;">
+      <div id="notify-title" style="font-size:14px;font-weight:700;margin-bottom:2px;"></div>
+      <div id="notify-body"  style="font-size:12px;opacity:0.75;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"></div>
+    </div>
+    <button onclick="dismissNotify()" aria-label="閉じる" style="background:none;border:none;color:#fff;font-size:18px;opacity:0.6;padding:0 4px;flex-shrink:0;">✕</button>
+  </div>
+</div>
+
+<script>
+'use strict';
+
+/* ===========================
+   定数
+=========================== */
+const STORAGE_KEY = 'replace_timer_v1';
+const MAX_ITEMS = 200;
+const SOON_DAYS = 180;       // バッジ・フィルター用（6ヶ月以内）
+const NOTIFY_DAYS = 14;      // アプリ内通知の閾値（2週間以内）
+const DATA_VERSION = 1;
+
+
+
+// カテゴリ別・種類別の耐用年数マスタ
+const LIFESPAN_MASTER = {
+  home_appliance: {
+    label: '家電・電子機器',
+    icon: '🔌',
+    items: [
+      { key: 'refrigerator',    label: '冷蔵庫',         years: 10 },
+      { key: 'washer',          label: '洗濯機',         years: 10 },
+      { key: 'ac',              label: 'エアコン',       years: 10 },
+      { key: 'tv',              label: 'テレビ',         years: 10 },
+      { key: 'pc',              label: 'パソコン',       years: 5  },
+      { key: 'smartphone',      label: 'スマートフォン', years: 3  },
+      { key: 'tablet',          label: 'タブレット',     years: 4  },
+      { key: 'microwave',       label: '電子レンジ',     years: 10 },
+      { key: 'vacuum',          label: '掃除機',         years: 8  },
+      { key: 'rice_cooker',     label: '炊飯器',         years: 10 },
+      { key: 'water_heater',    label: '給湯器',         years: 10 },
+      { key: 'dryer',           label: '乾燥機',         years: 10 },
+      { key: 'dishwasher',      label: '食洗機',         years: 10 },
+    ]
+  },
+  clothing: {
+    label: '衣類・ファッション',
+    icon: '👗',
+    items: [
+      { key: 'coat',      label: 'コート・ジャケット', years: 5  },
+      { key: 'shoes',     label: '靴',                 years: 3  },
+      { key: 'bag',       label: 'バッグ',             years: 5  },
+      { key: 'underwear', label: '下着・靴下',         years: 1  },
+      { key: 'suit',      label: 'スーツ',             years: 3  },
+      { key: 'jeans',     label: 'ジーンズ',           years: 3  },
+      { key: 'sneakers',  label: 'スニーカー',         years: 2  },
+    ]
+  },
+  vehicle: {
+    label: '車・自転車',
+    icon: '🚗',
+    items: [
+      { key: 'car',       label: '自動車',           years: 10 },
+      { key: 'tire',      label: 'タイヤ（夏）',     years: 5  },
+      { key: 'tire_w',    label: 'タイヤ（冬）',     years: 5  },
+      { key: 'battery',   label: 'カーバッテリー',   years: 3  },
+      { key: 'bicycle',   label: '自転車',           years: 7  },
+      { key: 'bike_tire', label: '自転車タイヤ',     years: 3  },
+    ]
+  },
+  daily: {
+    label: '日用品・消耗品',
+    icon: '🪥',
+    items: [
+      { key: 'toothbrush',    label: '歯ブラシ',           years: 0.25  },
+      { key: 'tooth_electric',label: '電動歯ブラシ本体',   years: 3     },
+      { key: 'filter_water',  label: '浄水器フィルター',   years: 0.5   },
+      { key: 'mattress',      label: 'マットレス',         years: 10    },
+      { key: 'pillow',        label: '枕',                 years: 3     },
+      { key: 'sheets',        label: '布団・シーツ',       years: 5     },
+      { key: 'towel',         label: 'タオル',             years: 2     },
+      { key: 'sponge',        label: 'スポンジ',           years: 0.08  },
+    ]
+  },
+  furniture: {
+    label: '家具・インテリア',
+    icon: '🪑',
+    items: [
+      { key: 'sofa',   label: 'ソファ',       years: 10 },
+      { key: 'desk',   label: 'デスク・机',   years: 15 },
+      { key: 'chair',  label: '椅子',         years: 10 },
+      { key: 'bed',    label: 'ベッドフレーム', years: 20 },
+      { key: 'shelf',  label: '棚・収納',     years: 15 },
+      { key: 'curtain',label: 'カーテン',     years: 5  },
+    ]
+  },
+  food: {
+    label: '食品・飲料',
+    icon: '🍱',
+    items: [
+      { key: 'seasoning', label: '調味料（開封後）', years: 0.5 },
+      { key: 'rice',      label: '米（精米後）',     years: 0.08 },
+      { key: 'oil',       label: '食用油（開封後）', years: 0.17 },
+    ]
+  },
+  health: {
+    label: '健康・美容',
+    icon: '💊',
+    items: [
+      { key: 'contacts',   label: 'コンタクトレンズケース', years: 3   },
+      { key: 'glasses',    label: 'メガネフレーム',         years: 3   },
+      { key: 'hair_dryer', label: 'ドライヤー',             years: 5   },
+      { key: 'shaver',     label: '電気シェーバー',         years: 5   },
+      { key: 'skincare',   label: 'スキンケア用品（開封後）',years: 0.5 },
+    ]
+  },
+  other: {
+    label: 'その他',
+    icon: '📦',
+    items: []
+  }
+};
+
+/* ===========================
+   状態管理
+=========================== */
+const defaultState = () => ({
+  items: [],
+  ui: { page: 'home', filter: 'all' },
+  version: DATA_VERSION
+});
+
+function loadState() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return defaultState();
+    const parsed = JSON.parse(raw);
+    if (!Array.isArray(parsed.items)) return defaultState();
+    return parsed;
+  } catch {
+    return defaultState();
+  }
+}
+
+
+/* debounce: 連続呼び出しを300ms待ってから1回だけ実行 */
+function debounce(fn, ms) {
+  let timer;
+  return (...args) => { clearTimeout(timer); timer = setTimeout(() => fn(...args), ms); };
+}
+
+function _saveStateNow() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  } catch(e) {
+    if (e.name === 'QuotaExceededError') {
+      showToast('⚠️ 保存容量が上限に達しました');
+    }
+  }
+
+}
+const saveState = debounce(_saveStateNow, 300);
+
+
+
+let state = loadState();
+
+function setState(patch) {
+  Object.assign(state, patch);
+  saveState();
+  render();
+}
+
+/* ===========================
+   ユーティリティ
+=========================== */
+const haptic = (type = 'light') => navigator.vibrate?.(type === 'heavy' ? 30 : 10);
+
+function escapeHtml(str) {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+let toastTimer = null;
+function showToast(msg, duration = 3200) {
+  const el = document.getElementById('toast');
+  // 表示中のアニメーションをリセットしてから新しいメッセージを表示
+  el.style.animation = 'none';
+  el.style.opacity = '1';
+  el.style.transition = 'none';
+  // 強制リフロー（アニメーションリセットを確実に反映）
+  void el.offsetHeight;
+  el.textContent = msg;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => {
+    el.style.transition = 'opacity 0.4s ease';
+    el.style.opacity = '0';
+    setTimeout(() => { el.style.transition = ''; el.style.animation = ''; }, 400);
+  }, duration);
+}
+
+function updateBadge(id, count) {
+  const badge = document.getElementById(`badge-${id}`);
+  if (!badge) return;
+  badge.style.display = count > 0 ? 'inline-flex' : 'none';
+  badge.textContent = count > 99 ? '99+' : count;
+}
+
+function genId() {
+  return crypto.randomUUID?.() ?? `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+}
+
+/* ===========================
+   日付・進捗計算
+=========================== */
+function getDaysInfo(item) {
+  const purchased = new Date(item.purchasedAt);
+  const targetMs = item.lifeYears * 365 * 24 * 60 * 60 * 1000;
+  const replaceDate = new Date(purchased.getTime() + targetMs);
+  const now = new Date();
+  const daysLeft = Math.ceil((replaceDate - now) / (1000 * 60 * 60 * 24));
+  const totalDays = Math.ceil(targetMs / (1000 * 60 * 60 * 24));
+  const elapsedDays = Math.ceil((now - purchased) / (1000 * 60 * 60 * 24));
+  const progress = Math.min(1, elapsedDays / totalDays);
+  return { daysLeft, totalDays, elapsedDays, progress, replaceDate };
+}
+
+function getStatus(daysLeft) {
+  if (daysLeft < 0) return 'over';
+  if (daysLeft <= SOON_DAYS) return 'soon';
+  return 'ok';
+}
+
+function formatDate(dateStr) {
+  const d = new Date(dateStr);
+  return `${d.getFullYear()}年${d.getMonth()+1}月${d.getDate()}日`;
+}
+
+/** 買い替え目安日を「M月D日」形式で返す */
+function formatReplaceDate(replaceDate) {
+  const d = new Date(replaceDate);
+  const now = new Date();
+  const sameYear = d.getFullYear() === now.getFullYear();
+  if (sameYear) return `${d.getMonth()+1}月${d.getDate()}日`;
+  return `${d.getFullYear()}年${d.getMonth()+1}月`;
+}
+
+/** 買い替え目安日の「日」部分だけ返す */
+function formatReplaceDateDay(replaceDate) {
+  return new Date(replaceDate).getDate();
+}
+
+/** 買い替え目安日の「M月」部分を返す */
+function formatReplaceDateMonth(replaceDate) {
+  const d = new Date(replaceDate);
+  const now = new Date();
+  if (d.getFullYear() !== now.getFullYear()) return `${d.getFullYear()}`;
+  return `${d.getMonth()+1}月`;
+}
+
+function formatDaysLeft(daysLeft) {
+  if (daysLeft < 0) return `${Math.abs(daysLeft)}日超過`;
+  if (daysLeft === 0) return '本日が目安日';
+  if (daysLeft < 30) return `あと${daysLeft}日`;
+  if (daysLeft < 365) return `あと約${Math.round(daysLeft/30)}ヶ月`;
+  return `あと約${(daysLeft/365).toFixed(1)}年`;
+}
+
+/* ===========================
+   ページ切り替え
+=========================== */
+function showPage(page) {
+  document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
+  const el = document.getElementById(`page-${page}`);
+  if (el) el.style.display = 'block';
+  document.querySelectorAll('.nav-btn').forEach(b =>
+    b.classList.toggle('active', b.dataset.page === page)
+  );
+  state.ui.page = page;
+
+  // ヘッダー切り替え
+  const titleEl  = document.getElementById('header-title');
+  const actionEl = document.getElementById('header-action');
+  const menuBtn  = document.getElementById('header-menu-btn');
+  const titles = {
+    home:    '買い替えタイマー',
+    list:    'アイテム一覧',
+    buy:     '買ってもOKリスト',
+    ref:     '耐用年数の目安',
+    migrate: 'データ移行',
+  };
+  titleEl.textContent = titles[page] || '買い替えタイマー';
+
+  // ＋ボタンはホーム・リストのみ表示
+  const showAdd = page === 'home' || page === 'list';
+  actionEl.style.display = showAdd ? 'flex' : 'none';
+  // ⋯メニューボタンは参考・共有ページでは非表示（既にそのページにいるので）
+  menuBtn.style.display = (page === 'ref' || page === 'migrate') ? 'none' : 'flex';
+
+  render();
+}
+
+/* ===========================
+   ヘッダーメニュー
+=========================== */
+function toggleHeaderMenu() {
+  const menu = document.getElementById('header-menu');
+  const overlay = document.getElementById('header-menu-overlay');
+  const isOpen = menu.style.display !== 'none';
+  menu.style.display = isOpen ? 'none' : 'block';
+  overlay.style.display = isOpen ? 'none' : 'block';
+  haptic();
+}
+function closeHeaderMenu() {
+  document.getElementById('header-menu').style.display = 'none';
+  document.getElementById('header-menu-overlay').style.display = 'none';
+}
+
+/* ===========================
+   フィルター
+=========================== */
+function setFilter(filter, btn) {
+  state.ui.filter = filter;
+  document.querySelectorAll('.seg-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.filter === filter);
+    b.setAttribute('aria-selected', b.dataset.filter === filter);
+  });
+  haptic();
+  renderList();
+}
+
+/* ===========================
+   レンダリング
+=========================== */
+function render() {
+  const page = state.ui.page;
+
+  // バッジ更新（常に）
+  const overCount  = state.items.filter(item => getDaysInfo(item).daysLeft < 0).length;
+  const urgentCount = state.items.filter(item => {
+    const { daysLeft } = getDaysInfo(item);
+    return daysLeft < 0 || daysLeft <= SOON_DAYS;
+  }).length;
+  updateBadge('home', urgentCount);
+  updateBadge('list', urgentCount);
+  updateBadge('buy', overCount);
+
+  if (page === 'home')  renderHome();
+  if (page === 'list')  renderList();
+  if (page === 'ref')   renderRef();
+  if (page === 'buy')     renderBuyPage();
+  if (page === 'migrate') renderMigratePage();
+}
+
+function renderHome() {
+  const items = state.items;
+
+  // サマリー
+  const summaryEl = document.getElementById('home-summary');
+  if (items.length === 0) {
+    summaryEl.innerHTML = '';
+  } else {
+    const over = items.filter(i => getStatus(getDaysInfo(i).daysLeft) === 'over').length;
+    const soon = items.filter(i => getStatus(getDaysInfo(i).daysLeft) === 'soon').length;
+    const ok   = items.filter(i => getStatus(getDaysInfo(i).daysLeft) === 'ok').length;
+    const allOk = over === 0 && soon === 0;
+
+    summaryEl.innerHTML = allOk
+      ? `<div style="margin:0 16px 16px;background:linear-gradient(135deg,#dcfce7,#f0fdf4);border-radius:var(--radius-m);padding:16px;display:flex;align-items:center;gap:12px;">
+           <span style="font-size:32px;">🎉</span>
+           <div>
+             <div style="font-size:15px;font-weight:700;color:#15803d;">すべて良好です</div>
+             <div style="font-size:13px;color:#16a34a;">${ok}件を管理中</div>
+           </div>
+         </div>`
+      : `<div style="display:flex;gap:8px;margin:0 16px 16px;">
+           <div style="flex:1;background:#fee2e2;border-radius:var(--radius-m);padding:12px 8px;text-align:center;" ${over > 0 ? 'onclick="showPage(\'buy\')" style="flex:1;background:#fee2e2;border-radius:var(--radius-m);padding:12px 8px;text-align:center;cursor:pointer;"' : ''}>
+             <div style="font-size:28px;font-weight:800;color:#b91c1c;line-height:1;">${over}</div>
+             <div style="font-size:11px;color:#b91c1c;font-weight:600;margin-top:2px;">要交換</div>
+           </div>
+           <div style="flex:1;background:#fef9c3;border-radius:var(--radius-m);padding:12px 8px;text-align:center;">
+             <div style="font-size:28px;font-weight:800;color:#b45309;line-height:1;">${soon}</div>
+             <div style="font-size:11px;color:#b45309;font-weight:600;margin-top:2px;">もうすぐ</div>
+           </div>
+           <div style="flex:1;background:#f0f9ff;border-radius:var(--radius-m);padding:12px 8px;text-align:center;">
+             <div style="font-size:28px;font-weight:800;color:#0369a1;line-height:1;">${ok}</div>
+             <div style="font-size:11px;color:#0369a1;font-weight:600;margin-top:2px;">良好</div>
+           </div>
+         </div>`;
+  }
+
+  // 要チェックリスト（期限超過・2週間以内を優先）
+  const alertEl = document.getElementById('home-alert-list');
+  const alertItems = items
+    .map(i => ({ item: i, info: getDaysInfo(i) }))
+    .filter(({ info }) => info.daysLeft <= NOTIFY_DAYS)
+    .sort((a, b) => a.info.daysLeft - b.info.daysLeft)
+    .slice(0, 8);
+
+  if (items.length === 0) {
+    alertEl.innerHTML = `
+      <div class="empty-state">
+        <div style="font-size:48px;margin-bottom:12px;">📦</div>
+        <p style="font-size:16px;font-weight:700;color:var(--c-text);margin-bottom:8px;">アイテムがまだありません</p>
+        <p style="font-size:14px;">右上の ＋ から追加しましょう</p>
+
+      </div>`;
+  } else if (alertItems.length === 0) {
+    alertEl.innerHTML = `
+      <div style="padding:0 16px;">
+        <p style="font-size:13px;font-weight:600;color:var(--c-sub);margin-bottom:10px;">直近の買い替え予定</p>
+      </div>
+      <div class="empty-state" style="padding:32px 24px;">
+        <div style="font-size:40px;margin-bottom:8px;">✨</div>
+        <p style="font-size:15px;font-weight:600;color:var(--c-text);">2週間以内の予定はありません</p>
+      </div>`;
+  } else {
+    alertEl.innerHTML = `
+      <div style="padding:0 16px;">
+        <p style="font-size:13px;font-weight:600;color:var(--c-sub);margin-bottom:10px;">直近の買い替え予定</p>
+      </div>
+      ${alertItems.map(({ item, info }) => renderItemCard(item, info)).join('')}
+      ${items.filter(i => getDaysInfo(i).daysLeft <= NOTIFY_DAYS).length > 8
+        ? `<button class="tappable" onclick="showPage('list')" style="display:block;margin:4px 16px 8px;width:calc(100% - 32px);height:44px;background:var(--c-surface);border:1px solid var(--c-border);border-radius:var(--radius-m);font-size:14px;font-weight:600;color:var(--c-sub);">すべて見る →</button>`
+        : ''}`;
+  }
+}
+
+function renderList() {
+  const el = document.getElementById('item-list');
+  if (!el) return;
+
+  const query = document.getElementById('search-input')?.value.trim().toLowerCase() ?? '';
+  const filter = state.ui.filter;
+
+  let items = state.items.map(i => ({ item: i, info: getDaysInfo(i) }));
+
+  // フィルター
+  if (filter !== 'all') {
+    items = items.filter(({ info }) => getStatus(info.daysLeft) === filter);
+  }
+
+  // 検索
+  if (query) {
+    items = items.filter(({ item }) =>
+      item.name.toLowerCase().includes(query) ||
+      (item.memo || '').toLowerCase().includes(query) ||
+      (item.categoryLabel || '').toLowerCase().includes(query)
+    );
+  }
+
+  // ソート（緊急度順）
+  items.sort((a, b) => a.info.daysLeft - b.info.daysLeft);
+
+  if (items.length === 0) {
+    el.innerHTML = `<div class="empty-state"><div style="font-size:40px;margin-bottom:8px;">🔍</div><p style="font-size:15px;font-weight:600;color:var(--c-text);">${query ? '該当なし' : 'アイテムなし'}</p><p style="font-size:13px;">${query ? '別のキーワードを試してください' : '右上の ＋ から追加しましょう'}</p></div>`;
+    return;
+  }
+
+  el.innerHTML = items.map(({ item, info }) => renderItemCard(item, info, false)).join('');
+}
+
+function renderItemCard(item, info) {
+  const status = getStatus(info.daysLeft);
+  const catMaster = LIFESPAN_MASTER[item.category];
+  const icon = catMaster?.icon ?? '📦';
+
+  const monthLabel = formatReplaceDateMonth(info.replaceDate);
+  const dayLabel   = status === 'over'
+    ? `+${Math.abs(info.daysLeft)}`
+    : formatReplaceDateDay(info.replaceDate);
+  const subLabel   = status === 'over'  ? '日超過'
+                   : status === 'soon'  ? '日以内'
+                   : '';
+  const labelClass = status === 'over' ? 'label-over' : status === 'soon' ? 'label-soon' : 'label-ok';
+  const labelText  = status === 'over' ? '要交換' : status === 'soon' ? 'まもなく' : '良好';
+
+  return `
+    <div class="item-card status-${status} tappable" data-id="${escapeHtml(item.id)}" data-action="edit"
+         role="button" tabindex="0" aria-label="${escapeHtml(item.name)}を編集">
+      <div class="card-date-block">
+        <div class="card-date-month">${escapeHtml(monthLabel)}</div>
+        <div class="card-date-day">${escapeHtml(String(dayLabel))}</div>
+        <div class="card-date-label ${labelClass}">${labelText}</div>
+      </div>
+      <div class="card-info">
+        <div class="card-name">${escapeHtml(item.name)}</div>
+        <div class="card-meta">
+          ${escapeHtml(item.categoryLabel || '')}${item.subcatLabel ? ' · ' + escapeHtml(item.subcatLabel) : ''}
+          ${item.memo ? ' · ' + escapeHtml(item.memo.slice(0, 20)) : ''}
+        </div>
+      </div>
+      <div class="card-cat-icon" aria-hidden="true">${icon}</div>
+    </div>
+  `;
+}
+
+/* ===========================
+   買ってもOKリスト
+=========================== */
+function renderBuyPage() {
+  const el = document.getElementById('buy-page-content');
+  if (!el) return;
+
+  const overItems = state.items
+    .map(i => ({ item: i, info: getDaysInfo(i) }))
+    .filter(({ info }) => info.daysLeft < 0)
+    .sort((a, b) => a.info.daysLeft - b.info.daysLeft); // 超過日数が多い順
+
+  if (overItems.length === 0) {
+    el.innerHTML = `
+      <div class="empty-state">
+        <div style="font-size:52px;margin-bottom:12px;">🎉</div>
+        <p style="font-size:16px;font-weight:700;color:var(--c-text);margin-bottom:8px;">買い替えが必要なものはありません</p>
+        <p style="font-size:14px;">すべてのアイテムが良好な状態です</p>
+      </div>`;
+    return;
+  }
+
+  el.innerHTML = `
+    <div style="padding:0 16px 12px;">
+      <div style="background:var(--c-primary-light);border:1px solid var(--c-primary);border-radius:var(--radius-m);padding:12px 14px;display:flex;align-items:center;gap:10px;opacity:0.85;">
+        <span style="font-size:20px;">💡</span>
+        <p style="font-size:13px;color:var(--c-primary);line-height:1.6;">期限を超えたアイテムです。購入したら「買った！」をタップすると購入日がリセットされます。</p>
+      </div>
+    </div>
+    <div>
+      ${overItems.map(({ item, info }) => renderBuyCard(item, info)).join('')}
+    </div>
+  `;
+}
+
+function renderBuyCard(item, info) {
+  const catMaster = LIFESPAN_MASTER[item.category];
+  const icon = catMaster?.icon ?? '📦';
+  const overDays = Math.abs(info.daysLeft);
+  const overUnit = overDays < 30 ? '日' : overDays < 365 ? 'ヶ月' : '年';
+  const overNum  = overDays < 30
+    ? String(overDays)
+    : overDays < 365
+    ? `約${Math.round(overDays / 30)}`
+    : `約${(overDays / 365).toFixed(1)}`;
+
+  return `
+    <div class="item-card status-over" data-id="${escapeHtml(item.id)}"
+         style="display:flex;align-items:center;gap:12px;position:relative;overflow:hidden;">
+      <div class="card-date-block">
+        <div class="card-date-month" style="color:var(--c-danger);">超過</div>
+        <div class="card-date-day" style="color:var(--c-danger);font-size:22px;">${escapeHtml(overNum)}</div>
+        <div class="card-date-label label-over">${escapeHtml(overUnit)}超過</div>
+      </div>
+      <div class="card-info">
+        <div class="card-name">${escapeHtml(item.name)}</div>
+        <div class="card-meta">${escapeHtml(item.categoryLabel || '')}${item.memo ? ' · ' + escapeHtml(item.memo.slice(0,20)) : ''}</div>
+      </div>
+      <button class="tappable" data-action="bought" data-id="${escapeHtml(item.id)}"
+              style="flex-shrink:0;height:40px;padding:0 14px;background:var(--c-success);color:#fff;border:none;border-radius:20px;font-size:13px;font-weight:700;white-space:nowrap;"
+              aria-label="${escapeHtml(item.name)}を購入済みにする">
+        ✅ 買った！
+      </button>
+    </div>
+  `;
+}
+
+/** 「買った！」→ 購入日を今日にリセット */
+function markAsBought(id) {
+  const today = new Date().toISOString().split('T')[0];
+  state.items = state.items.map(i =>
+    i.id === id ? { ...i, purchasedAt: today } : i
+  );
+  saveState();
+  haptic('heavy');
+  showToast('✅ 購入日をリセットしました！');
+  render();
+}
+
+
+/* ===========================
+   データ移行（エクスポート/インポート）
+=========================== */
+function renderMigratePage() {
+  const el = document.getElementById('migrate-page-content');
+  if (!el) return;
+  const count = state.items.length;
+  el.innerHTML = `
+    <div style="padding:0 16px 24px;">
+
+      <!-- エクスポート -->
+      <div style="background:var(--c-bg);border:1px solid var(--c-border);border-radius:var(--radius-m);padding:16px;box-shadow:var(--shadow-card);margin-bottom:16px;">
+        <p style="font-size:14px;font-weight:700;color:var(--c-text);margin-bottom:6px;">📤 このデバイスからエクスポート</p>
+        <p style="font-size:13px;color:var(--c-sub);margin-bottom:12px;line-height:1.6;">現在の${count}件のデータをテキストとして表示します。そのテキストを別のデバイスでインポートしてください。</p>
+        <button class="tappable" id="btn-export"
+          style="width:100%;height:48px;background:var(--c-primary);color:#fff;border:none;border-radius:var(--radius-s);font-size:15px;font-weight:700;">
+          データをエクスポート
+        </button>
+        <div id="export-area" style="display:none;margin-top:12px;">
+          <p style="font-size:12px;color:var(--c-sub);margin-bottom:6px;">↓ このテキスト全体を長押しで選択してコピーしてください</p>
+          <textarea id="export-text" readonly
+            style="width:100%;height:120px;padding:10px;border:1.5px solid var(--c-primary);border-radius:var(--radius-s);font-size:11px;font-family:monospace;resize:none;background:var(--c-surface);color:var(--c-text);box-sizing:border-box;"></textarea>
+          <button class="tappable" id="btn-copy-export"
+            style="width:100%;height:44px;margin-top:8px;background:var(--c-surface);color:var(--c-text);border:1.5px solid var(--c-border);border-radius:var(--radius-s);font-size:14px;font-weight:600;">
+            📋 テキストをコピー
+          </button>
+        </div>
+      </div>
+
+      <!-- インポート -->
+      <div style="background:var(--c-bg);border:1px solid var(--c-border);border-radius:var(--radius-m);padding:16px;box-shadow:var(--shadow-card);">
+        <p style="font-size:14px;font-weight:700;color:var(--c-text);margin-bottom:6px;">📥 別のデバイスからインポート</p>
+        <p style="font-size:13px;color:var(--c-sub);margin-bottom:12px;line-height:1.6;">エクスポートしたテキストを貼り付けて読み込みます。現在のデータは上書きされます。</p>
+        <textarea id="import-text" placeholder="エクスポートしたテキストをここに貼り付け"
+          style="width:100%;height:120px;padding:10px;border:1.5px solid var(--c-border);border-radius:var(--radius-s);font-size:11px;font-family:monospace;resize:none;background:var(--c-bg);color:var(--c-text);box-sizing:border-box;outline:none;"></textarea>
+        <button class="tappable" id="btn-import"
+          style="width:100%;height:48px;margin-top:10px;background:var(--c-success);color:#fff;border:none;border-radius:var(--radius-s);font-size:15px;font-weight:700;">
+          データを読み込む
+        </button>
+      </div>
+
+    </div>
+  `;
+
+  // エクスポートボタン
+  document.getElementById('btn-export').addEventListener('click', () => {
+    const raw = localStorage.getItem(STORAGE_KEY) || JSON.stringify(state);
+    document.getElementById('export-text').value = raw;
+    document.getElementById('export-area').style.display = 'block';
+    haptic();
+  });
+
+  // コピーボタン
+  document.getElementById('btn-copy-export').addEventListener('click', () => {
+    const text = document.getElementById('export-text').value;
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(text)
+        .then(() => { showToast('📋 コピーしました！別のデバイスで貼り付けてください'); haptic(); })
+        .catch(() => { showToast('⚠️ コピーできませんでした。テキストを長押しで選択してください'); });
+    } else {
+      // clipboard API非対応時はフォールバック
+      const ta = document.getElementById('export-text');
+      ta.select();
+      document.execCommand('copy');
+      showToast('📋 コピーしました！');
+      haptic();
+    }
+  });
+
+  // インポートボタン
+  document.getElementById('btn-import').addEventListener('click', () => {
+    const text = document.getElementById('import-text').value.trim();
+    if (!text) { showToast('⚠️ テキストを貼り付けてください'); return; }
+    try {
+      const parsed = JSON.parse(text);
+      if (!Array.isArray(parsed.items)) throw new Error('データ形式が不正です');
+      parsed.items.forEach(item => {
+        if (!item.id || typeof item.name !== 'string') throw new Error('アイテムデータが不正です');
+      });
+      showConfirm(
+        `${parsed.items.length}件のデータを読み込みますか？`,
+        '現在のデータは上書きされます'
+      ).then(ok => {
+        if (!ok) return;
+        state.items = parsed.items;
+        if (parsed.ui) state.ui = { ...state.ui, ...parsed.ui };
+        saveState();
+        showToast(`✅ ${parsed.items.length}件を読み込みました`);
+        haptic('heavy');
+        showPage('home');
+      });
+    } catch(e) {
+      showToast('⚠️ データの読み込みに失敗しました。テキストを確認してください');
+    }
+  });
+}
+
+function renderRef() {
+  const el = document.getElementById('ref-list');
+  if (!el) return;
+
+  el.innerHTML = Object.entries(LIFESPAN_MASTER)
+    .filter(([key, cat]) => cat.items.length > 0)
+    .map(([key, cat]) => `
+      <div style="margin:0 16px 16px;">
+        <div style="font-size:13px;font-weight:700;color:var(--c-sub);margin-bottom:8px;display:flex;align-items:center;gap:6px;">
+          <span>${cat.icon}</span><span>${escapeHtml(cat.label)}</span>
+        </div>
+        <div style="background:var(--c-bg);border:1px solid var(--c-border);border-radius:var(--radius-m);overflow:hidden;box-shadow:var(--shadow-card);">
+          ${cat.items.map((item, i) => `
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 14px;${i > 0 ? 'border-top:1px solid var(--c-border);' : ''}">
+              <span style="font-size:15px;">${escapeHtml(item.label)}</span>
+              <div style="display:flex;align-items:center;gap:8px;">
+                <span style="font-size:14px;font-weight:700;color:var(--c-primary);">${item.years < 1 ? Math.round(item.years * 12) + 'ヶ月' : item.years + '年'}</span>
+                <button class="tappable" data-action="prefill" data-cat="${escapeHtml(key)}" data-subcat="${escapeHtml(item.key)}" style="height:28px;padding:0 10px;border:1.5px solid var(--c-primary);border-radius:14px;background:transparent;font-size:12px;font-weight:600;color:var(--c-primary);" aria-label="${escapeHtml(item.label)}を追加">＋追加</button>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `).join('');
+}
+
+
+
+/* ===========================
+   モーダル
+=========================== */
+let editingId = null;
+
+function openAddModal() {
+  if (document.querySelector('#modal')?.style.display === 'flex') return;
+  editingId = null;
+  document.getElementById('modal-title').textContent = 'アイテムを追加';
+  document.getElementById('modal-save-btn').textContent = '追加する';
+  clearModalForm();
+
+  // デフォルトで今日の日付
+  const today = new Date().toISOString().split('T')[0];
+  document.getElementById('input-date').value = today;
+
+  openModal();
+  haptic();
+}
+
+
+
+function openModal() {
+  const modal = document.getElementById('modal');
+  modal.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+  // ESCキー：AbortControllerで確実にクリーンアップ
+  if (modal._escAbort) modal._escAbort.abort(); // 前回分を確実に削除
+  modal._escAbort = new AbortController();
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeModal();
+  }, { signal: modal._escAbort.signal });
+  // フォーカス
+  setTimeout(() => document.getElementById('input-name').focus(), 100);
+}
+
+function closeModal() {
+  const modal = document.getElementById('modal');
+  modal.style.display = 'none';
+  document.body.style.overflow = '';
+  if (modal._escAbort) { modal._escAbort.abort(); modal._escAbort = null; }
+}
+
+function clearModalForm() {
+  ['input-name','input-date','input-years','input-memo'].forEach(id => {
+    document.getElementById(id).value = '';
+    document.getElementById(id).style.borderColor = '';
+  });
+  document.getElementById('input-category').value = '';
+  document.getElementById('input-subcat').innerHTML = '<option value="">先にカテゴリを選択</option>';
+  document.getElementById('years-hint').textContent = '';
+  document.querySelectorAll('.ferr').forEach(e => e.remove());
+  // ペースセクションをリセット
+  document.getElementById('pace-section').style.display = 'none';
+  document.getElementById('pace-fields').style.display = 'none';
+  document.getElementById('input-pace-total').value = '';
+  document.getElementById('input-pace-per-day').value = '';
+  document.getElementById('pace-result').textContent = '—';
+  document.getElementById('pace-ai-hint').textContent = '「AIで解析」をタップすると商品名から自動入力します';
+}
+
+/* ===========================
+   カテゴリ変更
+=========================== */
+function onCategoryChange(defaultSubcat) {
+  const catKey = document.getElementById('input-category').value;
+  const subSel = document.getElementById('input-subcat');
+  const hint = document.getElementById('years-hint');
+
+  if (!catKey || !LIFESPAN_MASTER[catKey]) {
+    subSel.innerHTML = '<option value="">先にカテゴリを選択</option>';
+    hint.textContent = '';
+    return;
+  }
+
+  const items = LIFESPAN_MASTER[catKey].items;
+  if (items.length === 0) {
+    subSel.innerHTML = '<option value="">（なし）</option>';
+    hint.textContent = '';
+    return;
+  }
+
+  subSel.innerHTML = '<option value="">種類を選択（任意）</option>' +
+    items.map(i => `<option value="${escapeHtml(i.key)}" data-years="${i.years}">${escapeHtml(i.label)}（目安: ${i.years < 1 ? Math.round(i.years*12)+'ヶ月' : i.years+'年'}）</option>`).join('');
+
+  if (defaultSubcat) {
+    subSel.value = defaultSubcat;
+    onSubcatChange();
+  }
+
+  updatePaceSectionVisibility();
+}
+
+function onSubcatChange() {
+  const subSel = document.getElementById('input-subcat');
+  const selected = subSel.options[subSel.selectedIndex];
+  const years = selected?.dataset.years;
+  const hint = document.getElementById('years-hint');
+  const yearsInput = document.getElementById('input-years');
+
+  if (years) {
+    yearsInput.value = years;
+    hint.textContent = `💡 ${selected.text.split('（')[0]} の目安: ${Number(years) < 1 ? Math.round(Number(years)*12)+'ヶ月' : years+'年'}`;
+  } else {
+    hint.textContent = '';
+  }
+  updatePaceSectionVisibility();
+}
+
+/* ===========================
+   使用ペース計算
+=========================== */
+
+/** カテゴリに応じて使用ペースセクションの表示/非表示を切り替え */
+function updatePaceSectionVisibility() {
+  const cat = document.getElementById('input-category').value;
+  const paceSection = document.getElementById('pace-section');
+  // 消耗品カテゴリのみ表示
+  const consumableCategories = new Set(['daily', 'health', 'food']);
+  paceSection.style.display = consumableCategories.has(cat) ? 'block' : 'none';
+}
+
+/** 商品名からAIが枚数・容量・使用ペースを解析 */
+async function analyzePace() {
+  const name = document.getElementById('input-name').value.trim();
+  const memo = document.getElementById('input-memo').value.trim();
+  const hint = document.getElementById('pace-ai-hint');
+  const btn = document.getElementById('btn-pace-analyze');
+
+  if (!name) { showToast('⚠️ 先にアイテム名を入力してください'); return; }
+
+  btn.disabled = true;
+  btn.textContent = '解析中…';
+  hint.textContent = 'AIが商品名を解析しています…';
+
+  // 商品名から枚数・容量・標準使用ペースをルールベースで推定
+  const fullName = `${name} ${memo}`.toLowerCase();
+  const result = estimatePaceFromName(fullName);
+
+  if (result) {
+    applyPaceEstimate(result);
+    hint.textContent = `💡 AIが推定した値です。実際の使用頻度に合わせて調整してください`;
+  } else {
+    hint.textContent = '⚠️ 自動解析できませんでした。手動で入力してください';
+    showPaceFields();
+  }
+
+  btn.disabled = false;
+  btn.textContent = 'AIで解析';
+}
+
+/** 商品名・メモからルールベースで枚数・使用ペースを推定 */
+function estimatePaceFromName(text) {
+  // パターン: 数量 × 単位
+  const patterns = [
+    // 枚数系
+    { re: /(\d+)\s*枚/,          unit: '枚', defaultPerDay: 1   },
+    // 容量系（ml）
+    { re: /(\d+)\s*ml/i,         unit: 'ml', defaultPerDay: 10  },
+    // 容量系（g）
+    { re: /(\d+)\s*g(?!\S)/i,    unit: 'g',  defaultPerDay: 3   },
+    // ロール系
+    { re: /(\d+)\s*[ロールroll]/i, unit: '個', defaultPerDay: 0.5 },
+    // 個数系
+    { re: /(\d+)\s*個/,          unit: '個', defaultPerDay: 1   },
+    // 回数系
+    { re: /(\d+)\s*回/,          unit: '回', defaultPerDay: 1   },
+  ];
+
+  // 品目別の標準使用ペース上書き
+  const paceOverrides = [
+    { keywords: ['シートマスク', 'フェイスパック', 'パック'], unit: '枚', perDay: 3/7 }, // 週3枚
+    { keywords: ['コンタクト', 'ワンデー'],                  unit: '枚', perDay: 2   }, // 1日2枚(両目)
+    { keywords: ['ティッシュ', 'ティシュ'],                  unit: '箱', perDay: 1/30 },// 1箱/月
+    { keywords: ['トイレットペーパー', 'トイレット'],        unit: '個', perDay: 1/7  }, // 週1ロール
+    { keywords: ['キッチンペーパー'],                        unit: '個', perDay: 1/7  },
+    { keywords: ['洗顔', 'クレンジング'],                    unit: 'ml', perDay: 5    }, // 1回5ml×2
+    { keywords: ['ボディソープ', 'ボディウォッシュ', 'ハンドソープ'], unit: 'ml', perDay: 20 },
+    { keywords: ['シャンプー', 'コンディショナー'],         unit: 'ml', perDay: 15   },
+    { keywords: ['マウスウォッシュ', '洗口液'],             unit: 'ml', perDay: 30   },
+    { keywords: ['洗濯'],                                    unit: 'ml', perDay: 50   },
+    { keywords: ['食器用洗剤', '食器洗剤'],                 unit: 'ml', perDay: 15   },
+    { keywords: ['消臭'],                                    unit: '個', perDay: 1/90 }, // 3ヶ月/個
+    { keywords: ['ゴミ袋'],                                  unit: '枚', perDay: 1    },
+    { keywords: ['クリーナー', 'お掃除'],                   unit: 'ml', perDay: 10   },
+  ];
+
+  // 品目ペースの上書きチェック
+  let overridePerDay = null;
+  let overrideUnit = null;
+  for (const o of paceOverrides) {
+    if (o.keywords.some(k => text.includes(k))) {
+      overridePerDay = o.perDay;
+      overrideUnit = o.unit;
+      break;
+    }
+  }
+
+  // 総量の抽出
+  for (const p of patterns) {
+    const m = text.match(p.re);
+    if (m) {
+      const total = Number(m[1]);
+      const unit = overrideUnit || p.unit;
+      const perDay = overridePerDay ?? p.defaultPerDay;
+      return { total, unit, perDay };
+    }
+  }
+
+  // 総量が取れなくてもペースのみわかる場合
+  if (overridePerDay !== null) {
+    return { total: null, unit: overrideUnit, perDay: overridePerDay };
+  }
+
+  return null;
+}
+
+/** 推定結果をフォームに反映して計算する */
+function applyPaceEstimate(result) {
+  showPaceFields();
+  if (result.total !== null) {
+    document.getElementById('input-pace-total').value = result.total;
+  }
+  const unitVal = result.unit;
+  document.getElementById('input-pace-unit').value = unitVal;
+  document.getElementById('input-pace-unit2').value = unitVal;
+  document.getElementById('input-pace-per-day').value = Number(result.perDay.toFixed(3));
+  calcPaceResult();
+}
+
+/** ペースフィールドを表示 */
+function showPaceFields() {
+  document.getElementById('pace-fields').style.display = 'block';
+}
+
+/** 総量 ÷ 1日使用量 → 買い替え目安（年）を計算して表示 */
+function calcPaceResult() {
+  const total   = Number(document.getElementById('input-pace-total').value);
+  const perDay  = Number(document.getElementById('input-pace-per-day').value);
+  const resultEl = document.getElementById('pace-result');
+
+  if (!total || !perDay || perDay <= 0) {
+    resultEl.textContent = '—';
+    return;
+  }
+
+  const days = total / perDay;
+  const years = days / 365;
+
+  let label;
+  if (days < 14)       label = `約${Math.round(days)}日`;
+  else if (days < 60)  label = `約${Math.round(days / 7)}週間`;
+  else if (days < 365) label = `約${Math.round(days / 30)}ヶ月`;
+  else                 label = `約${years.toFixed(1)}年`;
+
+  resultEl.textContent = label;
+  // 計算結果をinput-yearsにプレビュー反映
+  document.getElementById('input-years').value = Math.max(0.01, Number(years.toFixed(3)));
+  document.getElementById('years-hint').textContent = `📊 使用ペースから算出: ${label}`;
+}
+
+/** 「この値を反映する」ボタン */
+function applyPaceToYears() {
+  const total  = Number(document.getElementById('input-pace-total').value);
+  const perDay = Number(document.getElementById('input-pace-per-day').value);
+  if (!total || !perDay || perDay <= 0) {
+    showToast('⚠️ 総量と1日使用量を入力してください');
+    return;
+  }
+  calcPaceResult();
+  showToast('✅ 買い替え目安を更新しました');
+  haptic();
+}
+
+/* ===========================
+   バリデーション
+=========================== */
+function showError(input, msg) {
+  input.style.borderColor = 'var(--c-danger)';
+  let ferr = input.nextElementSibling;
+  if (!ferr?.classList.contains('ferr')) {
+    ferr = document.createElement('p');
+    ferr.className = 'ferr';
+    input.insertAdjacentElement('afterend', ferr);
+  }
+  ferr.textContent = msg;
+}
+const clearError = input => {
+  input.style.borderColor = '';
+  if (input.nextElementSibling?.classList.contains('ferr')) {
+    input.nextElementSibling.remove();
+  }
+};
+
+/* ===========================
+   CRUD
+=========================== */
+function saveItem() {
+  const saveBtn = document.getElementById('modal-save-btn');
+  if (saveBtn.disabled) return; // ダブルタップ防止
+
+  const nameInput  = document.getElementById('input-name');
+  const dateInput  = document.getElementById('input-date');
+  const yearsInput = document.getElementById('input-years');
+  const catSel     = document.getElementById('input-category');
+  const subSel     = document.getElementById('input-subcat');
+  const memoInput  = document.getElementById('input-memo');
+
+  let valid = true;
+
+  clearError(nameInput); clearError(dateInput); clearError(yearsInput);
+
+  if (!nameInput.value.trim()) { showError(nameInput, 'アイテム名を入力してください'); valid = false; }
+  if (!dateInput.value) { showError(dateInput, '購入日を入力してください'); valid = false; }
+  if (!yearsInput.value || Number(yearsInput.value) <= 0) { showError(yearsInput, '0より大きい値を入力してください'); valid = false; }
+
+  if (!valid) return;
+
+  saveBtn.disabled = true;
+
+  const catKey    = catSel.value;
+  const subcatKey = subSel.value;
+  const catLabel  = catKey ? LIFESPAN_MASTER[catKey]?.label : '';
+  const subcatLabel = subcatKey ? (LIFESPAN_MASTER[catKey]?.items.find(i => i.key === subcatKey)?.label ?? '') : '';
+
+  const itemData = {
+    name:          nameInput.value.trim(),
+    purchasedAt:   dateInput.value,
+    lifeYears:     Number(yearsInput.value),
+    memo:          memoInput.value.trim(),
+    category:      catKey,
+    categoryLabel: catLabel,
+    subcat:        subcatKey,
+    subcatLabel:   subcatLabel,
+  };
+
+  if (editingId) {
+    // 更新
+    const newItems = state.items.map(i =>
+      i.id === editingId ? { ...i, ...itemData } : i
+    );
+    state.items = newItems;
+    saveState();
+    closeModal();
+    showToast('✅ 更新しました');
+    haptic();
+    render();
+    saveBtn.disabled = false;
+  } else {
+    // 追加
+    if (state.items.length >= MAX_ITEMS) {
+      showToast(`⚠️ アイテムは最大${MAX_ITEMS}件まで`);
+      return;
+    }
+    const newItem = {
+      id: genId(),
+      createdAt: new Date().toISOString(),
+      ...itemData
+    };
+    state.items = [...state.items, newItem];
+    saveState();
+    closeModal();
+    showToast('✅ 追加しました');
+    haptic();
+    render();
+  }
+  // ダブルタップ防止解除（closeModal内でフォームリセットされるが念のため）
+  const _btn = document.getElementById('modal-save-btn');
+  if (_btn) _btn.disabled = false;
+}
+
+/* ===========================
+   削除（確認ダイアログ）
+=========================== */
+let confirmResolve = null;
+
+function showConfirm(msg, sub = '') {
+  return new Promise(resolve => {
+    confirmResolve = resolve;
+    document.getElementById('confirm-msg').textContent = msg;
+    document.getElementById('confirm-sub').textContent = sub;
+    const dialog = document.getElementById('confirm-dialog');
+    dialog.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  });
+}
+
+function closeConfirm(result) {
+  document.getElementById('confirm-dialog').style.display = 'none';
+  document.body.style.overflow = '';
+  if (confirmResolve) { confirmResolve(result); confirmResolve = null; }
+}
+
+async function deleteItem(id) {
+  const item = state.items.find(i => i.id === id);
+  if (!item) return;
+  const ok = await showConfirm(`「${item.name}」を削除しますか？`, 'この操作は取り消せません');
+  if (!ok) return;
+  state.items = state.items.filter(i => i.id !== id);
+  saveState();
+  closeModal();
+  showToast('🗑️ 削除しました');
+  haptic('heavy');
+  render();
+}
+
+/* ===========================
+   参考ページから追加
+=========================== */
+function prefillFromRef(catKey, subcatKey) {
+  if (document.querySelector('#modal')?.style.display === 'flex') return;
+  editingId = null;
+  document.getElementById('modal-title').textContent = 'アイテムを追加';
+  document.getElementById('modal-save-btn').textContent = '追加する';
+  clearModalForm();
+
+  const today = new Date().toISOString().split('T')[0];
+  document.getElementById('input-date').value = today;
+  document.getElementById('input-category').value = catKey;
+  onCategoryChange(subcatKey);
+
+  openModal();
+  haptic();
+}
+
+/* ===========================
+   編集モーダル
+=========================== */
+function openEditModal(id) {
+  if (document.querySelector('#modal')?.style.display === 'flex') return;
+  const item = state.items.find(i => i.id === id);
+  if (!item) return;
+  editingId = id;
+
+  // タイトル部分：削除ボタンは data-action="delete" data-id で委譲
+  const titleEl = document.getElementById('modal-title');
+  titleEl.innerHTML = '';
+  const titleWrap = document.createElement('div');
+  titleWrap.style.cssText = 'display:flex;justify-content:space-between;align-items:center;';
+  const titleText = document.createElement('span');
+  titleText.textContent = 'アイテムを編集';
+  const delBtn = document.createElement('button');
+  delBtn.className = 'tappable';
+  delBtn.dataset.action = 'delete';
+  delBtn.dataset.id = id;
+  delBtn.setAttribute('aria-label', '削除');
+  delBtn.style.cssText = 'width:32px;height:32px;border-radius:50%;background:#fee2e2;border:none;font-size:16px;display:flex;align-items:center;justify-content:center;color:var(--c-danger);';
+  delBtn.textContent = '🗑';
+  titleWrap.appendChild(titleText);
+  titleWrap.appendChild(delBtn);
+  titleEl.appendChild(titleWrap);
+
+  document.getElementById('modal-save-btn').textContent = '更新する';
+  document.getElementById('input-name').value = item.name;
+  document.getElementById('input-date').value = item.purchasedAt;
+  document.getElementById('input-years').value = item.lifeYears;
+  document.getElementById('input-memo').value = item.memo || '';
+
+  const catSel = document.getElementById('input-category');
+  catSel.value = item.category || '';
+  onCategoryChange(item.subcat);
+
+  openModal();
+  haptic();
+}
+
+/* ===========================
+   アプリ内通知
+=========================== */
+let notifyTimer = null;
+
+/** 起動時チェック：期限超過 or 残り14日以内のアイテムを通知 */
+function checkAndNotify() {
+  const over  = state.items.filter(i => getDaysInfo(i).daysLeft < 0);
+  const soon  = state.items.filter(i => {
+    const d = getDaysInfo(i).daysLeft;
+    return d >= 0 && d <= NOTIFY_DAYS;
+  });
+
+  if (over.length === 0 && soon.length === 0) return;
+
+  // 優先度：超過 > もうすぐ
+  if (over.length > 0) {
+    const names = over.slice(0, 2).map(i => i.name).join('・');
+    const suffix = over.length > 2 ? ` 他${over.length - 2}件` : '';
+    showNotify({
+      icon: '🛒',
+      title: `買い替え時期を過ぎています（${over.length}件）`,
+      body: names + suffix,
+      page: 'buy'
+    });
+  } else {
+    const names = soon.slice(0, 2).map(i => i.name).join('・');
+    const suffix = soon.length > 2 ? ` 他${soon.length - 2}件` : '';
+    showNotify({
+      icon: '⏰',
+      title: `もうすぐ買い替え時期です（${soon.length}件）`,
+      body: names + suffix,
+      page: 'list'
+    });
+  }
+}
+
+/** バナーを表示 */
+function showNotify({ icon, title, body, page }) {
+  const banner = document.getElementById('notify-banner');
+  document.getElementById('notify-icon').textContent  = icon;
+  document.getElementById('notify-title').textContent = title;
+  document.getElementById('notify-body').textContent  = body;
+
+  // タップでページ遷移
+  banner.onclick = (e) => {
+    if (e.target.closest('button')) return; // 閉じるボタンは除外
+    dismissNotify();
+    showPage(page);
+  };
+
+  banner.style.display = 'block';
+  banner.style.animation = 'none';
+  // アニメーションを再トリガー
+  requestAnimationFrame(() => {
+    banner.style.animation = 'slideDown 0.3s ease';
+  });
+
+  // 8秒後に自動で閉じる
+  clearTimeout(notifyTimer);
+  notifyTimer = setTimeout(dismissNotify, 8000);
+  haptic();
+}
+
+/** バナーを閉じる */
+function dismissNotify() {
+  clearTimeout(notifyTimer);
+  const banner = document.getElementById('notify-banner');
+  banner.style.opacity = '0';
+  banner.style.transition = 'opacity 0.25s ease';
+  setTimeout(() => {
+    banner.style.display = 'none';
+    banner.style.opacity = '';
+    banner.style.transition = '';
+  }, 250);
+}
+
+/* ===========================
+   初期化
+=========================== */
+function init() {
+  // イベント委譲：カードクリック（ホーム・リスト共通）
+  document.getElementById('home-alert-list').addEventListener('click', onCardClick);
+  document.getElementById('item-list').addEventListener('click', onCardClick);
+
+  // イベント委譲：買ってOKリストの「買った！」ボタン
+  document.getElementById('buy-page-content').addEventListener('click', e => {
+    const btn = e.target.closest('[data-action="bought"]');
+    if (!btn) return;
+    const id = btn.dataset.id;
+    if (id) markAsBought(id);
+  });
+
+  // イベント委譲：参考ページの＋追加ボタン
+  document.getElementById('ref-list').addEventListener('click', onRefClick);
+
+  // イベント委譲：モーダル内の削除ボタン
+  document.getElementById('modal').addEventListener('click', onModalClick);
+
+  // ペース入力フィールドのリアルタイム計算
+  ['input-pace-total', 'input-pace-per-day'].forEach(id => {
+    document.getElementById(id).addEventListener('input', calcPaceResult);
+  });
+
+  showPage(state.ui.page || 'home');
+
+  // 起動時にアプリ内通知チェック（少し遅らせて描画完了後に表示）
+  setTimeout(checkAndNotify, 800);
+}
+
+/** カードクリック委譲ハンドラ */
+function onCardClick(e) {
+  const card = e.target.closest('[data-action="edit"]');
+  if (!card) return;
+  const id = card.dataset.id;
+  if (id) openEditModal(id);
+}
+
+/** 参考ページの追加ボタン委譲ハンドラ */
+function onRefClick(e) {
+  const btn = e.target.closest('[data-action="prefill"]');
+  if (!btn) return;
+  e.stopPropagation();
+  prefillFromRef(btn.dataset.cat, btn.dataset.subcat);
+}
+
+/** モーダル内の削除・ペースボタン委譲ハンドラ */
+function onModalClick(e) {
+  const btn = e.target.closest('button');
+  if (!btn) return;
+
+  if (btn.dataset.action === 'delete') {
+    const id = btn.dataset.id;
+    if (id) deleteItem(id);
+    return;
+  }
+
+  switch(btn.id) {
+    case 'btn-pace-analyze': analyzePace(); break;
+    case 'btn-pace-apply':   applyPaceToYears(); break;
+  }
+}
+
+init();
+</script>
+</body>
+</html>
